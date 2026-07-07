@@ -28,7 +28,17 @@ function atualizarTabela() {
         </tr>
         `;
     });
+document.getElementById("totalProdutos").innerHTML = produtos.length;
 
+let estoque = 0;
+
+produtos.forEach(item=>{
+
+    estoque += item.quantidade;
+
+});
+
+document.getElementById("totalEstoque").innerHTML = estoque;
     salvarDados();
 }
 
@@ -82,3 +92,27 @@ function excluirProduto(indice){
 
 // Mostra os produtos ao abrir a página
 atualizarTabela();
+function pesquisarProduto(){
+
+    const texto = document
+    .getElementById("pesquisa")
+    .value
+    .toLowerCase();
+
+    const linhas = document.querySelectorAll("#tabelaProdutos tr");
+
+    linhas.forEach(linha=>{
+
+        if(linha.innerText.toLowerCase().includes(texto)){
+
+            linha.style.display="";
+
+        }else{
+
+            linha.style.display="none";
+
+        }
+
+    });
+
+}
