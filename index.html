@@ -1,84 +1,128 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linge & Seduções - Controle de Estoque</title>
+
+    <title>Linge & Seduções - Sistema de Estoque</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-    <header>
-        <h1>🛍️ Linge & Seduções</h1>
-        <h2>Controle de Estoque</h2>
-    </header>
-    <div class="painel">
+<div class="menu">
 
-    <div class="card">
-        <h3>Total de Produtos</h3>
-        <h1 id="totalProdutos">0</h1>
-    </div>
+    <h2>Linge & Seduções</h2>
 
-    <div class="card">
-        <h3>Total em Estoque</h3>
-        <h1 id="totalEstoque">0</h1>
-    </div>
+    <ul>
+
+        <li>🏠 Dashboard</li>
+        <li>📦 Produtos</li>
+        <li>📥 Entrada</li>
+        <li>📤 Saída</li>
+        <li>💰 Vendas</li>
+        <li>👥 Clientes</li>
+        <li>🚚 Fornecedores</li>
+        <li>📊 Relatórios</li>
+
+    </ul>
+
+</div>
+
+<div class="conteudo">
+
+<header>
+
+<h1>Controle de Estoque</h1>
+
+</header>
+
+<div class="painel">
+
+<div class="card">
+
+<h3>Produtos</h3>
+
+<h2 id="totalProdutos">0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Estoque</h3>
+
+<h2 id="totalEstoque">0</h2>
+
+</div>
+
+</div>
+
+<div class="cadastro">
+
+<input id="codigo" placeholder="Código">
+
+<input id="produto" placeholder="Produto">
+
+<input id="categoria" placeholder="Categoria">
+
+<input id="cor" placeholder="Cor">
+
+<input id="tamanho" placeholder="Tamanho">
+
+<input id="custo" type="number" placeholder="Custo">
+
+<input id="venda" type="number" placeholder="Venda">
+
+<input id="quantidade" type="number" placeholder="Quantidade">
+
+<button onclick="adicionarProduto()">
+
+Adicionar Produto
+
+</button>
 
 </div>
 
 <input
-type="text"
 id="pesquisa"
-placeholder="Pesquisar produto..."
+placeholder="Pesquisar..."
 onkeyup="pesquisarProduto()">
 
-   <section class="cadastro">
+<table>
 
-    <input type="text" id="codigo" placeholder="Código">
+<thead>
 
-    <input type="text" id="produto" placeholder="Produto">
+<tr>
 
-    <input type="text" id="categoria" placeholder="Categoria">
+<th>Código</th>
+<th>Produto</th>
+<th>Categoria</th>
+<th>Cor</th>
+<th>Tamanho</th>
+<th>Custo</th>
+<th>Venda</th>
+<th>Qtd</th>
+<th>Ações</th>
 
-    <input type="text" id="cor" placeholder="Cor">
+</tr>
 
-    <input type="text" id="tamanho" placeholder="Tamanho">
+</thead>
 
-    <input type="number" id="custo" placeholder="Preço de Custo">
+<tbody id="tabelaProdutos">
 
-    <input type="number" id="venda" placeholder="Preço de Venda">
+</tbody>
 
-    <input type="number" id="quantidade" placeholder="Quantidade">
+</table>
 
-    <button onclick="adicionarProduto()">
-        Adicionar Produto
-    </button>
-
-</section>
-
-    <table>
-
-        <thead>
-
-            <tr>
-
-                <th>Código</th>
-                <th>Produto</th>
-                <th>Quantidade</th>
-                <th>Ações</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody id="tabelaProdutos">
-
-        </tbody>
-
-    </table>
+</div>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
