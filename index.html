@@ -1,1 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linge & Seduções - Controle de Estoque</title>
 
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>🛍️ Linge & Seduções</h1>
+        <h2>Controle de Estoque</h2>
+    </header>
+
+    <section class="cadastro">
+
+        <input type="text" id="codigo" placeholder="Código">
+
+        <input type="text" id="produto" placeholder="Produto">
+
+        <input type="number" id="quantidade" placeholder="Quantidade">
+
+        <button onclick="adicionarProduto()">
+            Adicionar
+        </button>
+
+    </section>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Código</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Ações</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="tabelaProdutos">
+
+        </tbody>
+
+    </table>
+
+<script src="script.js"></script>
+
+</body>
+</html>
