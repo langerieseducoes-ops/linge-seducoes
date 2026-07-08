@@ -1,3 +1,5 @@
+# Linge & Seduções ERP
+
 Sistema de gestão desenvolvido para a loja Linge & Seduções.
 
 ## Funcionalidades
