@@ -65,3 +65,63 @@ function limparFormulario() {
     document.getElementById("quantidade").value = "";
 
 }
+// ===============================
+// Excluir Produto
+// ===============================
+
+function excluirProduto(codigo){
+
+    if(!confirm("Deseja realmente excluir este produto?")){
+        return;
+    }
+
+    produtos = produtos.filter(produto => produto.codigo !== codigo);
+
+    salvarProdutos();
+
+    atualizarTabela();
+
+}
+// ===============================
+// Editar Produto
+// ===============================
+
+function editarProduto(codigo){
+
+    const produto = produtos.find(p => p.codigo === codigo);
+
+    if(!produto){
+        return;
+    }
+
+    document.getElementById("codigo").value = produto.codigo;
+    document.getElementById("produto").value = produto.produto;
+    document.getElementById("categoria").value = produto.categoria;
+    document.getElementById("tamanho").value = produto.tamanho;
+    document.getElementById("cor").value = produto.cor;
+    document.getElementById("custo").value = produto.custo;
+    document.getElementById("venda").value = produto.venda;
+    document.getElementById("quantidade").value = produto.quantidade;
+
+}// ===============================
+// Editar Produto
+// ===============================
+
+function editarProduto(codigo){
+
+    const produto = produtos.find(p => p.codigo === codigo);
+
+    if(!produto){
+        return;
+    }
+
+    document.getElementById("codigo").value = produto.codigo;
+    document.getElementById("produto").value = produto.produto;
+    document.getElementById("categoria").value = produto.categoria;
+    document.getElementById("tamanho").value = produto.tamanho;
+    document.getElementById("cor").value = produto.cor;
+    document.getElementById("custo").value = produto.custo;
+    document.getElementById("venda").value = produto.venda;
+    document.getElementById("quantidade").value = produto.quantidade;
+
+}
