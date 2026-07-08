@@ -348,3 +348,54 @@ body{
     background:#b91550;
 
 }
+/* ===========================
+   BOTÕES DA TABELA
+=========================== */
+
+.btn{
+
+    border:none;
+
+    padding:8px 12px;
+
+    border-radius:6px;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    margin:2px;
+
+}
+
+.btn-editar{
+
+    background:#2196F3;
+
+}
+
+.btn-excluir{
+
+    background:#f44336;
+
+}
+
+.btn-entrada{
+
+    background:#4CAF50;
+
+}
+
+.btn-saida{
+
+    background:#ff9800;
+
+}
+
+.btn:hover{
+
+    opacity:.85;
+
+}
