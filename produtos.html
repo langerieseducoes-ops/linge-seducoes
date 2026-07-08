@@ -1,1 +1,115 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Produtos - Linge & Seduções ERP</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="menu">
+
+<h2>Linge & Seduções</h2>
+
+<ul>
+
+<li><a href="index.html">🏠 Dashboard</a></li>
+<li><a href="produtos.html">📦 Produtos</a></li>
+<li><a href="#">💰 Vendas</a></li>
+<li><a href="#">👥 Clientes</a></li>
+<li><a href="#">🚚 Fornecedores</a></li>
+<li><a href="#">📊 Relatórios</a></li>
+
+</ul>
+
+</div>
+
+<div class="conteudo">
+
+<h1>Cadastro de Produtos</h1>
+
+<div class="cadastro">
+
+<input id="codigo" placeholder="Código">
+
+<input id="produto" placeholder="Nome do Produto">
+
+<input id="categoria" placeholder="Categoria">
+
+<select id="tamanho">
+<option>P</option>
+<option>M</option>
+<option>G</option>
+<option>GG</option>
+<option>Único</option>
+</select>
+
+<input id="cor" placeholder="Cor">
+
+<input id="custo" type="number" placeholder="Preço de Custo">
+
+<input id="venda" type="number" placeholder="Preço de Venda">
+
+<input id="quantidade" type="number" placeholder="Quantidade">
+
+<button onclick="adicionarProduto()">
+
+Salvar Produto
+
+</button>
+
+</div>
+
+<hr>
+
+<h2>Produtos Cadastrados</h2>
+
+<input
+id="pesquisa"
+placeholder="Pesquisar produto..."
+onkeyup="pesquisarProduto()">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Código</th>
+<th>Produto</th>
+<th>Categoria</th>
+<th>Tamanho</th>
+<th>Cor</th>
+<th>Custo</th>
+<th>Venda</th>
+<th>Qtd</th>
+<th>Ações</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tabelaProdutos">
+
+</tbody>
+
+</table>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
+```
 
