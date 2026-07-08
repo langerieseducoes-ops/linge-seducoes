@@ -210,13 +210,23 @@ body{
 }
 
 .card{
+
     flex:1;
     min-width:220px;
-    background:#fff;
+    background:linear-gradient(135deg,#d81b60,#ff5ca8);
+    color:white;
     padding:20px;
-    border-radius:10px;
-    box-shadow:0 2px 8px rgba(0,0,0,.1);
+    border-radius:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
     text-align:center;
+
+}
+
+.card:hover{
+
+    transform:translateY(-5px);
+    transition:.3s;
+    
 }
 
 .card h3{
