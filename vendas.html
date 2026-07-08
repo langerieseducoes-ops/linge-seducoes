@@ -28,12 +28,63 @@
 
 <h1>Controle de Vendas</h1>
 
-<div class="card">
-<h2>Em desenvolvimento</h2>
-<p>Esta tela será responsável pelo caixa e pelas vendas da loja.</p>
-</div>
+<div class="painel-resumo">
+
+    <div class="card">
+        <h3>Vendas Hoje</h3>
+        <h2 id="vendasHoje">R$ 0,00</h2>
+    </div>
+
+    <div class="card">
+        <h3>Total de Itens</h3>
+        <h2 id="itensVendidos">0</h2>
+    </div>
 
 </div>
 
+<div class="cadastro">
+
+    <input id="cliente" placeholder="Cliente">
+
+    <select id="produtoVenda">
+        <option>Selecione um produto</option>
+    </select>
+
+    <input id="quantidadeVenda" type="number" placeholder="Quantidade">
+
+    <button onclick="registrarVenda()">
+        Registrar Venda
+    </button>
+
+</div>
+
+<hr>
+
+<h2>Histórico de Vendas</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Data</th>
+<th>Cliente</th>
+<th>Produto</th>
+<th>Qtd</th>
+<th>Valor</th>
+</tr>
+
+</thead>
+
+<tbody id="tabelaVendas">
+
+</tbody>
+
+</table>
+
+</div>
+  
+<script src="js/vendas.js"></script>
+  
 </body>
 </html>
