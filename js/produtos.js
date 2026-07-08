@@ -3,7 +3,6 @@
 // Módulo de Produtos
 // Parte 1
 // ======================================
-
 let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
 let indiceEdicao = -1;
 
