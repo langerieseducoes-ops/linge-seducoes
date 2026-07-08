@@ -238,3 +238,74 @@ body{
     color:#d81b60;
     font-size:30px;
 }
+/* ===========================
+   FORMULÁRIO DE PRODUTOS
+=========================== */
+
+.formulario{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:15px;
+
+    margin:25px 0;
+
+}
+
+.formulario input,
+.formulario select{
+
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid #ddd;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.formulario input:focus,
+.formulario select:focus{
+
+    outline:none;
+
+    border:2px solid #d81b60;
+
+    box-shadow:0 0 8px rgba(216,27,96,.25);
+
+}
+
+.botao-adicionar{
+
+    background:#d81b60;
+
+    color:white;
+
+    border:none;
+
+    padding:14px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+.botao-adicionar:hover{
+
+    background:#b91550;
+
+}
