@@ -1,16 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Linge & Seduções - Sistema de Estoque</title>
-
+    <title>Linge & Seduções - Dashboard</title>
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
@@ -20,126 +14,79 @@
     <h2>Linge & Seduções</h2>
 
     <ul>
-
-<li><a href="index.html">🏠 Dashboard</a></li>
-<li><a href="produtos.html">📦 Produtos</a></li>
-<li><a href="vendas.html">💰 Vendas</a></li>
-<li><a href="clientes.html">👥 Clientes</a></li>
-<li><a href="fornecedores.html">🚚 Fornecedores</a></li>
-<li><a href="relatorios.html">📊 Relatórios</a></li>
-
-</ul>
+        <li><a href="index.html">🏠 Dashboard</a></li>
+        <li><a href="produtos.html">📦 Produtos</a></li>
+        <li><a href="vendas.html">💰 Vendas</a></li>
+        <li><a href="clientes.html">👥 Clientes</a></li>
+        <li><a href="fornecedores.html">🚚 Fornecedores</a></li>
+        <li><a href="relatorios.html">📊 Relatórios</a></li>
+    </ul>
 
 </div>
 
 <div class="conteudo">
 
-<header>
+    <h1>Dashboard</h1>
 
-<h1>Controle de Estoque</h1>
+    <div class="painel-resumo">
 
-</header>
+        <div class="card">
+            <h3>Total de Produtos</h3>
+            <h2 id="totalProdutos">0</h2>
+        </div>
 
-<div class="painel">
+        <div class="card">
+            <h3>Itens em Estoque</h3>
+            <h2 id="totalEstoque">0</h2>
+        </div>
 
-<div class="card">
+        <div class="card">
+            <h3>Valor do Estoque</h3>
+            <h2 id="valorEstoque">R$ 0,00</h2>
+        </div>
 
-<h3>Produtos</h3>
+        <div class="card">
+            <h3>Vendas do Dia</h3>
+            <h2 id="vendasHoje">R$ 0,00</h2>
+        </div>
 
-<h2 id="totalProdutos">0</h2>
+    </div>
 
-</div>
+    <h2>Atalhos</h2>
 
-<div class="card">
+    <div class="painel-resumo">
 
-<h3>Estoque</h3>
+        <a href="produtos.html" class="card">
+            <h3>📦 Produtos</h3>
+            <p>Cadastro e estoque</p>
+        </a>
 
-<h2 id="totalEstoque">0</h2>
+        <a href="vendas.html" class="card">
+            <h3>💰 Vendas</h3>
+            <p>Registrar vendas</p>
+        </a>
 
-</div>
+        <a href="clientes.html" class="card">
+            <h3>👥 Clientes</h3>
+            <p>Cadastro de clientes</p>
+        </a>
 
-</div>
+        <a href="fornecedores.html" class="card">
+            <h3>🚚 Fornecedores</h3>
+            <p>Cadastro de fornecedores</p>
+        </a>
 
-<div class="cadastro">
+        <a href="relatorios.html" class="card">
+            <h3>📊 Relatórios</h3>
+            <p>Consultar relatórios</p>
+        </a>
 
-<input id="codigo" placeholder="Código">
-
-<input id="produto" placeholder="Produto">
-
-<input id="categoria" placeholder="Categoria">
-
-<input id="cor" placeholder="Cor">
-
-<input id="tamanho" placeholder="Tamanho">
-
-<input id="custo" type="number" placeholder="Custo">
-
-<input id="venda" type="number" placeholder="Venda">
-
-<input id="quantidade" type="number" placeholder="Quantidade">
-
-<button onclick="adicionarProduto()">
-
-Adicionar Produto
-
-</button>
-
-</div>
-
-<input
-id="pesquisa"
-placeholder="Pesquisar..."
-onkeyup="pesquisarProduto()">
-
-<div class="acoes">
-
-    <button onclick="exportarExcel()">
-        📊 Exportar Excel
-    </button>
-
-    <button onclick="imprimirRelatorio()">
-        🖨️ Imprimir
-    </button>
-
-</div>
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Código</th>
-<th>Produto</th>
-<th>Categoria</th>
-<th>Cor</th>
-<th>Tamanho</th>
-<th>Custo</th>
-<th>Venda</th>
-<th>Qtd</th>
-<th>Ações</th>
-
-</tr>
-
-</thead>
-
-<tbody id="tabelaProdutos">
-
-</tbody>
-
-</table>
+    </div>
 
 </div>
 
 <script src="script.js"></script>
-
-<script src="js/dashboard.js"></script>
 <script src="js/produtos.js"></script>
-<script src="js/vendas.js"></script>
-<script src="js/clientes.js"></script>
-<script src="js/fornecedores.js"></script>
-<script src="js/relatorios.js"></script>
 
 </body>
-
 </html>
