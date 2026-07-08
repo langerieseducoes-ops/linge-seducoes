@@ -309,3 +309,42 @@ body{
     background:#b91550;
 
 }
+/* Cadastro de Produtos */
+
+.cadastro{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:15px;
+
+    margin-top:20px;
+
+}
+
+.cadastro button{
+
+    background:#d81b60;
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    padding:12px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.cadastro button:hover{
+
+    background:#b91550;
+
+}
