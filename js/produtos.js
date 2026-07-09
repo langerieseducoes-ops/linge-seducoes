@@ -231,4 +231,6 @@ function pesquisarProduto(){
 // Inicialização
 // ======================================
 
-atualizarTabela();
+document.addEventListener("DOMContentLoaded", () => {
+    atualizarTabela();
+});
