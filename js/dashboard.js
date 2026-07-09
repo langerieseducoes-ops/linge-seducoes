@@ -1,4 +1,4 @@
-// Dashboard - Linge & Seduções
+// Dashboard - Linge & Seduções ERP
 
 function atualizarDashboard() {
 
@@ -34,4 +34,4 @@ function atualizarDashboard() {
 
 }
 
-window.onload = atualizarDashboard;
+document.addEventListener("DOMContentLoaded", atualizarDashboard);
