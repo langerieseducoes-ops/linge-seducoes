@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fornecedores - Linge & Seduções ERP</title>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
@@ -28,14 +30,75 @@
 
 <h1>Cadastro de Fornecedores</h1>
 
+<div class="painel-resumo">
+
 <div class="card">
-<h2>Em desenvolvimento</h2>
-<p>Aqui será feito o cadastro e a consulta dos fornecedores.</p>
+<h3>Total de Fornecedores</h3>
+<h2 id="totalFornecedores">0</h2>
 </div>
 
 </div>
-  
+
+<div class="cadastro">
+
+<input
+id="empresaFornecedor"
+placeholder="Empresa">
+
+<input
+id="contatoFornecedor"
+placeholder="Contato">
+
+<input
+id="telefoneFornecedor"
+placeholder="Telefone">
+
+<input
+id="emailFornecedor"
+placeholder="E-mail">
+
+<button
+class="botao-adicionar"
+onclick="cadastrarFornecedor()">
+
+Cadastrar Fornecedor
+
+</button>
+
+</div>
+
+<hr>
+
+<input
+id="pesquisaFornecedor"
+placeholder="Pesquisar fornecedor..."
+onkeyup="pesquisarFornecedor()">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Empresa</th>
+<th>Contato</th>
+<th>Telefone</th>
+<th>E-mail</th>
+<th>Ações</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tabelaFornecedores">
+
+</tbody>
+
+</table>
+
+</div>
+
 <script src="js/fornecedores.js"></script>
-  
+
 </body>
 </html>
