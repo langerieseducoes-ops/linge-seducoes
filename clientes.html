@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clientes - Linge & Seduções ERP</title>
-<link rel="stylesheet" href="style.css">
-</head>
 
+<link rel="stylesheet" href="style.css">
+
+</head>
 <body>
 
 <div class="menu">
@@ -28,14 +29,70 @@
 
 <h1>Cadastro de Clientes</h1>
 
+<div class="painel-resumo">
+
 <div class="card">
-<h2>Em desenvolvimento</h2>
-<p>Aqui será feito o cadastro e a consulta dos clientes.</p>
+<h3>Total de Clientes</h3>
+<h2 id="totalClientes">0</h2>
 </div>
 
 </div>
-  
+
+<div class="cadastro">
+
+<input
+id="nomeCliente"
+placeholder="Nome do Cliente">
+
+<input
+id="telefoneCliente"
+placeholder="Telefone">
+
+<input
+id="emailCliente"
+placeholder="E-mail">
+
+<button
+class="botao-adicionar"
+onclick="cadastrarCliente()">
+
+Cadastrar Cliente
+
+</button>
+
+</div>
+
+<hr>
+
+<input
+id="pesquisaCliente"
+placeholder="Pesquisar cliente..."
+onkeyup="pesquisarCliente()">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Nome</th>
+<th>Telefone</th>
+<th>E-mail</th>
+<th>Ações</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tabelaClientes">
+
+</tbody>
+
+</table>
+
+</div>
+
 <script src="js/clientes.js"></script>
-  
+
 </body>
 </html>
