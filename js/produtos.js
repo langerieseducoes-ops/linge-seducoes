@@ -29,25 +29,33 @@ function limparFormulario() {
 // Atualizar os cartões do topo
 function atualizarResumo(){
 
-    document.getElementById("totalProdutos").innerText = produtos.length;
-
     let estoque = 0;
     let valor = 0;
 
-    produtos.forEach(p=>{
-
-        estoque += p.quantidade;
-        valor += p.quantidade * p.custo;
-
+    produtos.forEach(p => {
+        estoque += Number(p.quantidade);
+        valor += Number(p.quantidade) * Number(p.custo);
     });
 
-    document.getElementById("totalEstoque").innerText = estoque;
+    const totalProdutos = document.getElementById("totalProdutos");
+    const totalEstoque = document.getElementById("totalEstoque");
+    const valorEstoque = document.getElementById("valorEstoque");
 
-    document.getElementById("valorEstoque").innerText =
-    valor.toLocaleString("pt-BR",{
-        style:"currency",
-        currency:"BRL"
-    });
+    if (totalProdutos) {
+        totalProdutos.innerText = produtos.length;
+    }
+
+    if (totalEstoque) {
+        totalEstoque.innerText = estoque;
+    }
+
+    if (valorEstoque) {
+        valorEstoque.innerText = valor.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        });
+    }
+
 }
 // ======================================
 // Atualizar Tabela
@@ -56,6 +64,8 @@ function atualizarResumo(){
 function atualizarTabela(lista = produtos){
 
     const tabela = document.getElementById("tabelaProdutos");
+
+    if (!tabela) return;
 
     tabela.innerHTML = "";
 
@@ -81,7 +91,6 @@ function atualizarTabela(lista = produtos){
                     🗑️
                 </button>
             </td>
-
         </tr>
         `;
 
