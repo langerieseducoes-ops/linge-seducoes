@@ -7,10 +7,7 @@ let fornecedores = JSON.parse(localStorage.getItem("fornecedores")) || [];
 
 // Salvar fornecedores
 function salvarFornecedores() {
-    localStorage.setItem(
-        "fornecedores",
-        JSON.stringify(fornecedores)
-    );
+    localStorage.setItem("fornecedores", JSON.stringify(fornecedores));
 }
 
 // Atualizar resumo
@@ -27,17 +24,19 @@ function atualizarResumoFornecedores() {
 // Cadastrar fornecedor
 function cadastrarFornecedor() {
 
-    const nome = document.getElementById("nomeFornecedor").value.trim();
+    const empresa = document.getElementById("empresaFornecedor").value.trim();
+    const contato = document.getElementById("contatoFornecedor").value.trim();
     const telefone = document.getElementById("telefoneFornecedor").value.trim();
     const email = document.getElementById("emailFornecedor").value.trim();
 
-    if (!nome) {
-        alert("Informe o nome do fornecedor.");
+    if (!empresa) {
+        alert("Informe o nome da empresa.");
         return;
     }
 
     fornecedores.push({
-        nome,
+        empresa,
+        contato,
         telefone,
         email,
         data: new Date().toLocaleString("pt-BR")
@@ -45,7 +44,8 @@ function cadastrarFornecedor() {
 
     salvarFornecedores();
 
-    document.getElementById("nomeFornecedor").value = "";
+    document.getElementById("empresaFornecedor").value = "";
+    document.getElementById("contatoFornecedor").value = "";
     document.getElementById("telefoneFornecedor").value = "";
     document.getElementById("emailFornecedor").value = "";
 
@@ -68,11 +68,13 @@ function listarFornecedores() {
 
         tabela.innerHTML += `
         <tr>
-            <td>${fornecedor.nome}</td>
+            <td>${fornecedor.empresa}</td>
+            <td>${fornecedor.contato}</td>
             <td>${fornecedor.telefone}</td>
             <td>${fornecedor.email}</td>
             <td>
-                <button class="btn btn-excluir" onclick="excluirFornecedor(${index})">
+                <button class="btn btn-excluir"
+                    onclick="excluirFornecedor(${index})">
                     🗑️
                 </button>
             </td>
