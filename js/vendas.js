@@ -20,7 +20,7 @@ function carregarProdutos() {
 
     produtos.forEach((produto, indice) => {
 
-        if (produto.quantidade > 0) {
+        if (Number(produto.quantidade) > 0) {
 
             select.innerHTML += `
                 <option value="${indice}">
@@ -51,8 +51,8 @@ function atualizarTabelaVendas() {
 
     vendas.forEach(venda => {
 
-        totalVendido += venda.valor;
-        totalItens += venda.quantidade;
+        totalVendido += Number(venda.valor);
+        totalItens += Number(venda.quantidade);
 
         tabela.innerHTML += `
             <tr>
@@ -60,19 +60,28 @@ function atualizarTabelaVendas() {
                 <td>${venda.cliente}</td>
                 <td>${venda.produto}</td>
                 <td>${venda.quantidade}</td>
-                <td>R$ ${venda.valor.toFixed(2)}</td>
+                <td>${Number(venda.valor).toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL"
+                })}</td>
             </tr>
         `;
 
     });
 
-    document.getElementById("vendasHoje").innerText =
-        totalVendido.toLocaleString("pt-BR", {
+    const vendasHoje = document.getElementById("vendasHoje");
+    const itensVendidos = document.getElementById("itensVendidos");
+
+    if (vendasHoje) {
+        vendasHoje.innerText = totalVendido.toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL"
         });
+    }
 
-    document.getElementById("itensVendidos").innerText = totalItens;
+    if (itensVendidos) {
+        itensVendidos.innerText = totalItens;
+    }
 
 }
 
@@ -98,19 +107,24 @@ function registrarVenda() {
 
     const produto = produtos[indiceProduto];
 
-    if (produto.quantidade < quantidade) {
+    if (!produto) {
+        alert("Produto inválido.");
+        return;
+    }
+
+    if (Number(produto.quantidade) < quantidade) {
         alert("Estoque insuficiente.");
         return;
     }
 
-    produto.quantidade -= quantidade;
+    produto.quantidade = Number(produto.quantidade) - quantidade;
 
     const venda = {
         data: new Date().toLocaleString("pt-BR"),
         cliente: cliente,
         produto: produto.produto,
         quantidade: quantidade,
-        valor: produto.venda * quantidade
+        valor: Number(produto.venda) * quantidade
     };
 
     vendas.push(venda);
@@ -133,5 +147,9 @@ function registrarVenda() {
 // Inicialização
 // ======================================
 
-carregarProdutos();
-atualizarTabelaVendas();
+document.addEventListener("DOMContentLoaded", () => {
+
+    carregarProdutos();
+    atualizarTabelaVendas();
+
+});
