@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Categorias - Linge & Seduções ERP</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="menu">
+
+<h2>Linge & Seduções</h2>
+
+<ul>
+
+<li><a href="index.html">🏠 Dashboard</a></li>
+<li><a href="produtos.html">📦 Produtos</a></li>
+<li><a href="vendas.html">💰 Vendas</a></li>
+<li><a href="clientes.html">👥 Clientes</a></li>
+<li><a href="fornecedores.html">🚚 Fornecedores</a></li>
+<li><a href="categorias.html">🏷️ Categorias</a></li>
+<li><a href="relatorios.html">📊 Relatórios</a></li>
+
+</ul>
+
+</div>
+
+<div class="conteudo">
+
+<h1>Cadastro de Categorias</h1>
+
+<div class="painel-resumo">
+
+<div class="card">
+
+<h3>Total de Categorias</h3>
+
+<h2 id="totalCategorias">0</h2>
+
+</div>
+
+</div>
+
+<div class="cadastro">
+
+<input
+id="nomeCategoria"
+placeholder="Nome da Categoria">
+
+<button
+class="botao-adicionar"
+onclick="cadastrarCategoria()">
+
+Cadastrar Categoria
+
+</button>
+
+</div>
+
+<hr>
+
+<input
+id="pesquisaCategoria"
+placeholder="Pesquisar..."
+onkeyup="pesquisarCategoria()">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Categoria</th>
+<th>Ações</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tabelaCategorias">
+
+</tbody>
+
+</table>
+
+</div>
+
+<script src="js/categorias.js"></script>
+
+</body>
+</html>
