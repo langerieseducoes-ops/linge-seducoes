@@ -49,22 +49,31 @@ function atualizarTabelaVendas() {
     let totalVendido = 0;
     let totalItens = 0;
 
-    vendas.forEach(venda => {
+    vendas.forEach((venda, indice) => {
 
         totalVendido += Number(venda.valor);
         totalItens += Number(venda.quantidade);
 
         tabela.innerHTML += `
-            <tr>
-                <td>${venda.data}</td>
-                <td>${venda.cliente}</td>
-                <td>${venda.produto}</td>
-                <td>${venda.quantidade}</td>
-                <td>${Number(venda.valor).toLocaleString("pt-BR", {
-                    style: "currency",
-                    currency: "BRL"
-                })}</td>
-            </tr>
+        <tr>
+            <td>${venda.data}</td>
+            <td>${venda.cliente}</td>
+            <td>${venda.produto}</td>
+            <td>${venda.quantidade}</td>
+
+            <td>${Number(venda.valor).toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL"
+            })}</td>
+
+            <td>
+                <button
+                    class="btn btn-excluir"
+                    onclick="excluirVenda(${indice})">
+                    🗑️
+                </button>
+            </td>
+        </tr>
         `;
 
     });
@@ -142,7 +151,40 @@ function registrarVenda() {
     alert("Venda registrada com sucesso!");
 
 }
+// ======================================
+// Excluir Venda
+// ======================================
 
+function excluirVenda(indice){
+
+    if(!confirm("Deseja excluir esta venda?")){
+        return;
+    }
+
+    const venda = vendas[indice];
+
+    // Devolve o produto ao estoque
+    const produto = produtos.find(p => p.produto === venda.produto);
+
+    if(produto){
+        produto.quantidade =
+            Number(produto.quantidade) + Number(venda.quantidade);
+    }
+
+    // Remove a venda
+    vendas.splice(indice, 1);
+
+    // Salva novamente
+    localStorage.setItem("produtos", JSON.stringify(produtos));
+    localStorage.setItem("vendas", JSON.stringify(vendas));
+
+    // Atualiza a tela
+    carregarProdutos();
+    atualizarTabelaVendas();
+
+    alert("Venda excluída com sucesso!");
+
+}
 // ======================================
 // Inicialização
 // ======================================
