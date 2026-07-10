@@ -17,6 +17,9 @@ function salvarCategorias() {
         JSON.stringify(categorias)
     );
 
+    // Atualiza as outras telas
+    window.dispatchEvent(new Event("storage"));
+
 }
 
 // ======================================
