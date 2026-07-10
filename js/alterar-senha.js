@@ -8,21 +8,16 @@ function alterarSenha() {
     const novaSenha = document.getElementById("novaSenha").value;
     const confirmarSenha = document.getElementById("confirmarSenha").value;
 
-    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
-    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    // Se ainda não existir senha, usa "1234"
+    let senha = localStorage.getItem("senhaERP") || "1234";
 
-    if (!usuarioLogado) {
-        alert("Nenhum usuário está logado.");
-        return;
-    }
-
-    if (senhaAtual !== usuarioLogado.senha) {
+    if (senhaAtual !== senha) {
         alert("Senha atual incorreta.");
         return;
     }
 
-    if (novaSenha.length < 6) {
-        alert("A nova senha deve ter pelo menos 6 caracteres.");
+    if (novaSenha.length < 4) {
+        alert("A senha deve ter no mínimo 4 caracteres.");
         return;
     }
 
@@ -31,21 +26,12 @@ function alterarSenha() {
         return;
     }
 
-    // Atualiza o usuário na lista
-    const indice = usuarios.findIndex(u => u.usuario === usuarioLogado.usuario);
+    localStorage.setItem("senhaERP", novaSenha);
 
-    if (indice !== -1) {
-        usuarios[indice].senha = novaSenha;
+    alert("Senha alterada com sucesso!");
 
-        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    document.getElementById("senhaAtual").value = "";
+    document.getElementById("novaSenha").value = "";
+    document.getElementById("confirmarSenha").value = "";
 
-        usuarioLogado.senha = novaSenha;
-        localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
-
-        alert("Senha alterada com sucesso!");
-
-        window.location.href = "index.html";
-    } else {
-        alert("Usuário não encontrado.");
-    }
 }
