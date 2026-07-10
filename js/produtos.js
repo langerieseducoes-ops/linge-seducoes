@@ -309,7 +309,11 @@ function pesquisarProduto(){
 // ======================================
 
 document.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("storage", () => {
 
+    carregarCategorias();
+
+});
     produtos = JSON.parse(localStorage.getItem("produtos")) || [];
 
     carregarCategorias();
