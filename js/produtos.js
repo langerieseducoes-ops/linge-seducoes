@@ -1,40 +1,69 @@
 // ======================================
 // Linge & Seduções ERP
 // Módulo de Produtos
-// Parte 1
 // ======================================
 
+// Lista de produtos
 let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+
+// Índice de edição
 let indiceEdicao = -1;
 
-// Salvar no LocalStorage
+// ======================================
+// Salvar Produtos
+// ======================================
+
 function salvarProdutos() {
-    localStorage.setItem("produtos", JSON.stringify(produtos));
+
+    localStorage.setItem(
+        "produtos",
+        JSON.stringify(produtos)
+    );
+
 }
 
-// Limpar formulário
-function limparFormulario() {
-    document.getElementById("codigo").value = "";
-    document.getElementById("produto").value = "";
-    document.getElementById("categoria").value = "";
-    document.getElementById("tamanho").value = "P";
-    document.getElementById("cor").value = "";
-    document.getElementById("custo").value = "";
-    document.getElementById("venda").value = "";
-    document.getElementById("quantidade").value = "";
+// ======================================
+// Carregar Categorias
+// ======================================
 
-    indiceEdicao = -1;
+function carregarCategorias() {
+
+    const select = document.getElementById("categoria");
+
+    if (!select) return;
+
+    const categorias = JSON.parse(localStorage.getItem("categorias")) || [];
+
+    select.innerHTML = `
+        <option value="">Selecione a Categoria</option>
+    `;
+
+    categorias.forEach(categoria => {
+
+        select.innerHTML += `
+            <option value="${categoria.nome}">
+                ${categoria.nome}
+            </option>
+        `;
+
+    });
+
 }
 
-// Atualizar os cartões do topo
-function atualizarResumo(){
+// ======================================
+// Atualizar Resumo
+// ======================================
+
+function atualizarResumo() {
 
     let estoque = 0;
     let valor = 0;
 
-    produtos.forEach(p => {
-        estoque += Number(p.quantidade);
-        valor += Number(p.quantidade) * Number(p.custo);
+    produtos.forEach(produto => {
+
+        estoque += Number(produto.quantidade);
+        valor += Number(produto.quantidade) * Number(produto.custo);
+
     });
 
     const totalProdutos = document.getElementById("totalProdutos");
@@ -78,8 +107,15 @@ function atualizarTabela(lista = produtos){
             <td>${item.categoria}</td>
             <td>${item.tamanho}</td>
             <td>${item.cor}</td>
-            <td>R$ ${Number(item.custo).toFixed(2)}</td>
-            <td>R$ ${Number(item.venda).toFixed(2)}</td>
+ <td>${Number(item.custo).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+})}</td>
+
+<td>${Number(item.venda).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+})}</td>
             <td>${item.quantidade}</td>
 
             <td>
@@ -100,6 +136,27 @@ function atualizarTabela(lista = produtos){
 
 }
 // ======================================
+// Limpar Formulário
+// ======================================
+
+function limparFormulario() {
+
+    document.getElementById("codigo").value = "";
+    document.getElementById("produto").value = "";
+
+    carregarCategorias();
+    document.getElementById("categoria").selectedIndex = 0;
+
+    document.getElementById("tamanho").value = "P";
+    document.getElementById("cor").value = "";
+    document.getElementById("custo").value = "";
+    document.getElementById("venda").value = "";
+    document.getElementById("quantidade").value = "";
+
+    indiceEdicao = -1;
+
+}
+// ======================================
 // Adicionar Produto
 // ======================================
 
@@ -107,7 +164,7 @@ function adicionarProduto(){
 
     const codigo = document.getElementById("codigo").value.trim();
     const produto = document.getElementById("produto").value.trim();
-    const categoria = document.getElementById("categoria").value.trim();
+    const categoria = document.getElementById("categoria").value;
     const tamanho = document.getElementById("tamanho").value;
     const cor = document.getElementById("cor").value.trim();
     const custo = parseFloat(document.getElementById("custo").value);
@@ -115,19 +172,29 @@ function adicionarProduto(){
     const quantidade = parseInt(document.getElementById("quantidade").value);
 
     if(
-        !codigo ||
-        !produto ||
-        !categoria ||
-        !cor ||
-        isNaN(custo) ||
-        isNaN(venda) ||
-        isNaN(quantidade)
-    ){
-        alert("Preencha todos os campos.");
-        return;
-    }
+    !codigo ||
+    !produto ||
+    !categoria ||
+    !cor ||
+    isNaN(custo) ||
+    isNaN(venda) ||
+    isNaN(quantidade)
+){
+    alert("Preencha todos os campos.");
+    return;
+}
 
-    if(indiceEdicao === -1){
+if (quantidade < 0) {
+    alert("A quantidade não pode ser negativa.");
+    return;
+}
+
+if (custo < 0 || venda < 0) {
+    alert("Os preços não podem ser negativos.");
+    return;
+}
+
+if(indiceEdicao === -1){
 
         if(produtos.some(p => p.codigo === codigo)){
             alert("Já existe um produto com esse código.");
@@ -160,9 +227,13 @@ function adicionarProduto(){
 
     }
 
-    salvarProdutos();
-    limparFormulario();
-    atualizarTabela();
+salvarProdutos();
+
+limparFormulario();
+
+carregarCategorias();
+
+atualizarTabela();
 
 }
 // ======================================
@@ -172,6 +243,8 @@ function adicionarProduto(){
 function editarProduto(indice){
 
     const p = produtos[indice];
+
+    carregarCategorias();
 
     document.getElementById("codigo").value = p.codigo;
     document.getElementById("produto").value = p.produto;
@@ -197,6 +270,10 @@ function excluirProduto(indice){
         produtos.splice(indice,1);
 
         salvarProdutos();
+        
+        produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+       
+        carregarCategorias();
 
         atualizarTabela();
 
@@ -232,5 +309,11 @@ function pesquisarProduto(){
 // ======================================
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+
+    carregarCategorias();
+
     atualizarTabela();
+
 });
