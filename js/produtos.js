@@ -147,7 +147,7 @@ function limparFormulario() {
     carregarCategorias();
     document.getElementById("categoria").selectedIndex = 0;
 
-    document.getElementById("tamanho").value = "P";
+    document.getElementById("tamanho").value = "";
     document.getElementById("cor").value = "";
     document.getElementById("custo").value = "";
     document.getElementById("venda").value = "";
