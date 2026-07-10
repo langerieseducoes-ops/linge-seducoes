@@ -321,3 +321,12 @@ window.addEventListener("storage", () => {
     atualizarTabela();
 
 });
+// ======================================
+// Imprimir Produtos
+// ======================================
+
+function imprimirTabela() {
+
+    window.print();
+
+}
