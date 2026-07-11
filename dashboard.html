@@ -10,7 +10,7 @@
 <script>
 
 // Verifica se o usuário fez login
-if(sessionStorage.getItem("usuarioLogado") !== "sim"){
+if(localStorage.getItem("usuarioLogado") !== "sim"){
 
     window.location.href = "index.html";
 
@@ -85,7 +85,7 @@ if(sessionStorage.getItem("usuarioLogado") !== "sim"){
 </div>
 
 <h2>Módulos do Sistema</h2>
-
+    
 <div class="painel-resumo">
 
     <a class="card" href="produtos.html">
@@ -134,14 +134,13 @@ function sair(){
 
     if(confirm("Deseja sair do sistema?")){
 
-        sessionStorage.clear();
+        localStorage.removeItem("usuarioLogado");
 
         window.location.href = "index.html";
 
     }
 
 }
-
 </script>
 
 </body>
