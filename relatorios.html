@@ -7,7 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Relatórios - Linge & Seduções ERP</title>
+
 <script src="js/seguranca.js"></script>
+
 <link rel="stylesheet" href="style.css">
 
 </head>
@@ -37,56 +39,44 @@
 
 <div class="conteudo">
 
-<h1>Relatórios Gerais</h1>
+<h1>Central de Relatórios</h1>
 
 <div class="painel-resumo">
 
 <div class="card">
-<h3>Total de Produtos</h3>
-<h2 id="rProdutos">0</h2>
-</div>
-
-<div class="card">
-<h3>Itens em Estoque</h3>
-<h2 id="rEstoque">0</h2>
-</div>
-
-<div class="card">
-<h3>Valor do Estoque</h3>
-<h2 id="rValor">R$ 0,00</h2>
-</div>
-
-<div class="card">
-<h3>Total Vendido</h3>
-<h2 id="rVendas">R$ 0,00</h2>
-</div>
-
-<div class="card">
-<h3>Número de Vendas</h3>
-<h2 id="rQtdVendas">0</h2>
-</div>
-
-<div class="card">
-<h3>Clientes</h3>
-<h2 id="rClientes">0</h2>
-</div>
-
-<div class="card">
-<h3>Fornecedores</h3>
-<h2 id="rFornecedores">0</h2>
-</div>
-
-</div>
-
-<div class="card">
-
-<h2>Ações</h2>
-
-<br>
-
-<button onclick="window.print()">
-🖨️ Imprimir Relatório
+<h3>📦 Produtos</h3>
+<button onclick="relatorioProdutos()">
+Imprimir
 </button>
+</div>
+
+<div class="card">
+<h3>💰 Vendas</h3>
+<button onclick="relatorioVendas()">
+Imprimir
+</button>
+</div>
+
+<div class="card">
+<h3>👥 Clientes</h3>
+<button onclick="relatorioClientes()">
+Imprimir
+</button>
+</div>
+
+<div class="card">
+<h3>🚚 Fornecedores</h3>
+<button onclick="relatorioFornecedores()">
+Imprimir
+</button>
+</div>
+
+<div class="card">
+<h3>💵 Financeiro</h3>
+<button onclick="relatorioFinanceiro()">
+Imprimir
+</button>
+</div>
 
 </div>
 
