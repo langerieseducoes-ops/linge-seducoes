@@ -1,100 +1,109 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Linge & Seduções ERP</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script>
-        if(localStorage.getItem("logado") !== "sim"){
-            window.location.href = "login.html";
-        }
-    </script>
+<title>Login - Linge & Seduções ERP</title>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+    margin:0;
+    background:#f4f6f9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.login-box{
+
+    width:400px;
+    background:#fff;
+    padding:40px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.20);
+
+}
+
+.login-box h1{
+
+    text-align:center;
+    color:#202940;
+    margin-bottom:10px;
+
+}
+
+.login-box p{
+
+    text-align:center;
+    color:#666;
+    margin-bottom:25px;
+
+}
+
+.login-box input{
+
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:15px;
+
+}
+
+.login-box button{
+
+    width:100%;
+    padding:14px;
+    background:#0b8f42;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-size:16px;
+    cursor:pointer;
+
+}
+
+.login-box button:hover{
+
+    background:#087536;
+
+}
+
+</style>
+
 </head>
 
 <body>
 
-<div class="menu">
+<div class="login-box">
 
-    <h2>Linge & Seduções</h2>
+<h1>Linge & Seduções ERP</h1>
 
-    <ul>
-    <li><a href="index.html">🏠 Dashboard</a></li>
-    <li><a href="produtos.html">📦 Produtos</a></li>
-    <li><a href="vendas.html">💰 Vendas</a></li>
-    <li><a href="clientes.html">👥 Clientes</a></li>
-    <li><a href="fornecedores.html">🚚 Fornecedores</a></li>
-    <li><a href="alterar-senha.html">🔐 Alterar Senha</a></li>
-    <li><a href="relatorios.html">📊 Relatórios</a></li>
-</ul>
+<p>Entre com sua senha</p>
 
-</div>
+<input
+type="password"
+id="senha"
+placeholder="Digite sua senha">
 
-<div class="conteudo">
+<button onclick="entrar()">
 
-    <h1>Dashboard</h1>
+Entrar
 
-    <div class="painel-resumo">
-
-        <div class="card">
-            <h3>Total de Produtos</h3>
-            <h2 id="totalProdutos">0</h2>
-        </div>
-
-        <div class="card">
-            <h3>Total em Estoque</h3>
-            <h2 id="totalEstoque">0</h2>
-        </div>
-
-        <div class="card">
-            <h3>Valor do Estoque</h3>
-            <h2 id="valorEstoque">R$ 0,00</h2>
-        </div>
-
-        <div class="card">
-            <h3>Vendas do Dia</h3>
-            <h2 id="vendasHoje">R$ 0,00</h2>
-        </div>
-
-    </div>
-
-    <h2>Módulos do Sistema</h2>
-
-    <div class="painel-resumo">
-
-        <a class="card" href="produtos.html">
-            <h3>📦 Produtos</h3>
-            <p>Cadastro e controle de estoque</p>
-        </a>
-
-        <a class="card" href="vendas.html">
-            <h3>💰 Vendas</h3>
-            <p>Registrar vendas</p>
-        </a>
-
-        <a class="card" href="clientes.html">
-            <h3>👥 Clientes</h3>
-            <p>Cadastro de clientes</p>
-        </a>
-
-        <a class="card" href="fornecedores.html">
-            <h3>🚚 Fornecedores</h3>
-            <p>Cadastro de fornecedores</p>
-        </a>
-
-        <a class="card" href="relatorios.html">
-            <h3>📊 Relatórios</h3>
-            <p>Relatórios e gráficos</p>
-        </a>
-
-    </div>
+</button>
 
 </div>
 
-<script src="js/dashboard.js"></script>
+<script src="js/login.js"></script>
 
 </body>
+
 </html>
