@@ -56,3 +56,93 @@ if(sessionStorage.getItem("usuarioLogado") !== "sim"){
     </ul>
 
 </div>
+<div class="conteudo">
+
+<h1>Dashboard</h1>
+
+<div class="painel-resumo">
+
+    <div class="card">
+        <h3>📦 Total de Produtos</h3>
+        <h2 id="totalProdutos">0</h2>
+    </div>
+
+    <div class="card">
+        <h3>📦 Estoque</h3>
+        <h2 id="totalEstoque">0</h2>
+    </div>
+
+    <div class="card">
+        <h3>💰 Valor do Estoque</h3>
+        <h2 id="valorEstoque">R$ 0,00</h2>
+    </div>
+
+    <div class="card">
+        <h3>🛒 Vendas do Dia</h3>
+        <h2 id="vendasHoje">R$ 0,00</h2>
+    </div>
+
+</div>
+
+<h2>Módulos do Sistema</h2>
+
+<div class="painel-resumo">
+
+    <a class="card" href="produtos.html">
+        <h3>📦 Produtos</h3>
+        <p>Cadastro e controle de estoque</p>
+    </a>
+
+    <a class="card" href="vendas.html">
+        <h3>💰 Vendas</h3>
+        <p>Registrar vendas</p>
+    </a>
+
+    <a class="card" href="clientes.html">
+        <h3>👥 Clientes</h3>
+        <p>Cadastro de clientes</p>
+    </a>
+
+    <a class="card" href="fornecedores.html">
+        <h3>🚚 Fornecedores</h3>
+        <p>Cadastro de fornecedores</p>
+    </a>
+
+    <a class="card" href="categorias.html">
+        <h3>🏷️ Categorias</h3>
+        <p>Cadastro de categorias</p>
+    </a>
+
+    <a class="card" href="financeiro.html">
+        <h3>💵 Financeiro</h3>
+        <p>Controle financeiro</p>
+    </a>
+
+    <a class="card" href="relatorios.html">
+        <h3>📊 Relatórios</h3>
+        <p>Relatórios completos</p>
+    </a>
+
+</div>
+
+</div>
+<script src="js/dashboard.js"></script>
+
+<script>
+
+function sair(){
+
+    if(confirm("Deseja sair do sistema?")){
+
+        sessionStorage.clear();
+
+        window.location.href = "index.html";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
