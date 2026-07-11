@@ -7,7 +7,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Produtos - Linge & Seduções ERP</title>
-
+<script>
+if(localStorage.getItem("usuarioLogado") !== "sim"){
+    window.location.href = "index.html";
+}
+</script>
+    
 <link rel="stylesheet" href="style.css">
 
 </head>
