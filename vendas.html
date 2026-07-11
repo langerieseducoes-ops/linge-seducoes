@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Vendas - Linge & Seduções ERP</title>
-    <script>
-if(localStorage.getItem("usuarioLogado") !== "sim"){
-    window.location.href = "index.html";
-}
-</script>
+
+<script src="js/seguranca.js"></script>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
@@ -105,21 +106,6 @@ if(localStorage.getItem("usuarioLogado") !== "sim"){
 
 </div>
   
-<script src="js/vendas.js"></script>
-<script>
-
-function sair(){
-
-    if(confirm("Deseja realmente sair do sistema?")){
-
-        localStorage.removeItem("usuarioLogado");
-
-        window.location.href = "index.html";
-
-    }
-
-}
-
-</script>  
+    <script src="js/vendas.js"></script>
 </body>
 </html>
