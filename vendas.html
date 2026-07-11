@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vendas - Linge & Seduções ERP</title>
+    <script>
+if(localStorage.getItem("usuarioLogado") !== "sim"){
+    window.location.href = "index.html";
+}
+</script>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -14,12 +19,27 @@
 <h2>Linge & Seduções</h2>
 
 <ul>
-<li><a href="dashboard.html">🏠 Dashboard</a></li>
-<li><a href="produtos.html">📦 Produtos</a></li>
-<li><a href="vendas.html">💰 Vendas</a></li>
-<li><a href="clientes.html">👥 Clientes</a></li>
-<li><a href="fornecedores.html">🚚 Fornecedores</a></li>
-<li><a href="relatorios.html">📊 Relatórios</a></li>
+
+    <li><a href="dashboard.html">🏠 Dashboard</a></li>
+
+    <li><a href="produtos.html">📦 Produtos</a></li>
+
+    <li><a href="vendas.html">💰 Vendas</a></li>
+
+    <li><a href="clientes.html">👥 Clientes</a></li>
+
+    <li><a href="fornecedores.html">🚚 Fornecedores</a></li>
+
+    <li><a href="categorias.html">🏷️ Categorias</a></li>
+
+    <li><a href="financeiro.html">💵 Financeiro</a></li>
+
+    <li><a href="relatorios.html">📊 Relatórios</a></li>
+
+    <li><a href="alterar-senha.html">🔐 Alterar Senha</a></li>
+
+    <li><a href="#" onclick="sair()">🚪 Sair</a></li>
+
 </ul>
 
 </div>
@@ -86,6 +106,20 @@
 </div>
   
 <script src="js/vendas.js"></script>
-  
+<script>
+
+function sair(){
+
+    if(confirm("Deseja realmente sair do sistema?")){
+
+        localStorage.removeItem("usuarioLogado");
+
+        window.location.href = "index.html";
+
+    }
+
+}
+
+</script>  
 </body>
 </html>
