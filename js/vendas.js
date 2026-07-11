@@ -138,8 +138,30 @@ function registrarVenda() {
 
     vendas.push(venda);
 
-    localStorage.setItem("produtos", JSON.stringify(produtos));
-    localStorage.setItem("vendas", JSON.stringify(vendas));
+// =============================
+// Lançamento automático
+// no Financeiro
+// =============================
+
+let financeiro =
+JSON.parse(localStorage.getItem("financeiro")) || [];
+
+financeiro.push({
+
+    tipo:"Entrada",
+
+    descricao:"Venda - " + produto.produto,
+
+    valor:Number(produto.venda) * quantidade,
+
+    data:new Date().toLocaleDateString("pt-BR")
+
+});
+
+localStorage.setItem("financeiro", JSON.stringify(financeiro));
+
+localStorage.setItem("produtos", JSON.stringify(produtos));
+localStorage.setItem("vendas", JSON.stringify(vendas));
 
     document.getElementById("cliente").value = "";
     document.getElementById("produtoVenda").value = "";
@@ -171,14 +193,24 @@ function excluirVenda(indice){
             Number(produto.quantidade) + Number(venda.quantidade);
     }
 
+    // Remove lançamento do financeiro
+    let financeiro =
+    JSON.parse(localStorage.getItem("financeiro")) || [];
+
+    financeiro = financeiro.filter(f => !(
+        f.tipo === "Entrada" &&
+        f.descricao === "Venda - " + venda.produto &&
+        Number(f.valor) === Number(venda.valor)
+    ));
+
+    localStorage.setItem("financeiro", JSON.stringify(financeiro));
+
     // Remove a venda
-    vendas.splice(indice, 1);
+    vendas.splice(indice,1);
 
-    // Salva novamente
-    localStorage.setItem("produtos", JSON.stringify(produtos));
-    localStorage.setItem("vendas", JSON.stringify(vendas));
+    localStorage.setItem("produtos",JSON.stringify(produtos));
+    localStorage.setItem("vendas",JSON.stringify(vendas));
 
-    // Atualiza a tela
     carregarProdutos();
     atualizarTabelaVendas();
 
