@@ -1,37 +1,29 @@
-// ======================================
-// Alterar Senha
-// ======================================
+function alterarSenha(){
 
-function alterarSenha() {
+    const atual = document.getElementById("senhaAtual").value;
+    const nova = document.getElementById("novaSenha").value;
+    const confirmar = document.getElementById("confirmarSenha").value;
 
-    const senhaAtual = document.getElementById("senhaAtual").value;
-    const novaSenha = document.getElementById("novaSenha").value;
-    const confirmarSenha = document.getElementById("confirmarSenha").value;
+    const senha = localStorage.getItem("senhaERP");
 
-    // Se ainda não existir senha, usa "1234"
-    let senha = localStorage.getItem("senhaERP") || "1234";
-
-    if (senhaAtual !== senha) {
+    if(atual !== senha){
         alert("Senha atual incorreta.");
         return;
     }
 
-    if (novaSenha.length < 4) {
-        alert("A senha deve ter no mínimo 4 caracteres.");
+    if(nova.length < 4){
+        alert("A nova senha deve ter pelo menos 4 caracteres.");
         return;
     }
 
-    if (novaSenha !== confirmarSenha) {
-        alert("As senhas não coincidem.");
+    if(nova !== confirmar){
+        alert("As senhas não conferem.");
         return;
     }
 
-    localStorage.setItem("senhaERP", novaSenha);
+    localStorage.setItem("senhaERP", nova);
 
     alert("Senha alterada com sucesso!");
 
-    document.getElementById("senhaAtual").value = "";
-    document.getElementById("novaSenha").value = "";
-    document.getElementById("confirmarSenha").value = "";
-
+    window.location.href = "dashboard.html";
 }
