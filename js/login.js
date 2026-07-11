@@ -1,30 +1,49 @@
 // ======================================
 // Linge & Seduções ERP
-// Login
+// Sistema de Login
 // ======================================
 
-// Cria uma senha padrão caso ainda não exista
-if (!localStorage.getItem("senhaERP")) {
-    localStorage.setItem("senhaERP", "1234");
+
+// Criar senha padrão no primeiro acesso
+
+if(!localStorage.getItem("senhaERP")){
+
+    localStorage.setItem("senhaERP","1234");
+
 }
 
-function entrar() {
 
-    const senha = document.getElementById("senha").value;
-    const senhaSistema = localStorage.getItem("senhaERP");
+// ======================================
+// Entrar no Sistema
+// ======================================
 
-    if (senha === senhaSistema) {
+function entrar(){
 
-        // Marca o usuário como logado
-        sessionStorage.setItem("logado", "sim");
+    const senhaDigitada = document.getElementById("senha").value;
 
-        // Vai para o Dashboard
+    const senhaCorreta = localStorage.getItem("senhaERP");
+
+
+    if(senhaDigitada === senhaCorreta){
+
+
+        // Criar sessão de usuário
+
+        sessionStorage.setItem("usuarioLogado","sim");
+
+
+        // Ir para Dashboard
+
         window.location.href = "dashboard.html";
 
-    } else {
+
+    }else{
+
 
         alert("Senha incorreta!");
 
+
     }
+
 
 }
