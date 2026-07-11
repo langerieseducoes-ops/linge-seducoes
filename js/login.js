@@ -29,7 +29,7 @@ function entrar(){
 
         // Criar sessão de usuário
 
-        sessionStorage.setItem("usuarioLogado","sim");
+       localStorage.setItem("usuarioLogado","sim");
 
 
         // Ir para Dashboard
