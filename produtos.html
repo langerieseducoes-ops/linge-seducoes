@@ -7,13 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Produtos - Linge & Seduções ERP</title>
-<script>
-if(localStorage.getItem("usuarioLogado") !== "sim"){
-    window.location.href = "index.html";
-}
-</script>
-    
-<link rel="stylesheet" href="style.css">
+<script src="js/seguranca.js"></script>
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -31,7 +26,10 @@ if(localStorage.getItem("usuarioLogado") !== "sim"){
 <li><a href="clientes.html">👥 Clientes</a></li>
 <li><a href="fornecedores.html">🚚 Fornecedores</a></li>
 <li><a href="categorias.html">🏷️ Categorias</a></li>
+<li><a href="financeiro.html">💵 Financeiro</a></li>
 <li><a href="relatorios.html">📊 Relatórios</a></li>
+<li><a href="alterar-senha.html">🔐 Alterar Senha</a></li>
+<li><a href="#" onclick="sair()">🚪 Sair</a></li>
 
 </ul>
 
@@ -170,7 +168,7 @@ onkeyup="pesquisarProduto()">
 
 </div>
 
-<script src="js/seguranca.js"></script>
+<script src="js/produtos.js"></script>
 
 </body>
 
