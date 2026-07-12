@@ -138,8 +138,8 @@ function atualizarTabela(){
 
     let total=0;
 
-    compras.forEach((c)=>{
-
+   compras.forEach((c, indice)=>{
+       
         total+=Number(c.valor);
 
         tabela.innerHTML+=`
@@ -158,7 +158,13 @@ currency:"BRL"
 
 })}</td>
 
-<td>-</td>
+<td>
+    <button
+        class="btn btn-excluir"
+        onclick="excluirCompra(${indice})">
+        🗑️
+    </button>
+</td>
 
 </tr>
 
@@ -190,3 +196,48 @@ document.addEventListener("DOMContentLoaded",()=>{
     atualizarTabela();
 
 });
+// ======================================
+// Excluir Compra
+// ======================================
+
+function excluirCompra(indice){
+
+    if(!confirm("Deseja excluir esta compra?")){
+        return;
+    }
+
+    const compra = compras[indice];
+
+    // Devolve o estoque ao estado anterior
+    const produto = produtos.find(p => p.produto === compra.produto);
+
+    if(produto){
+        produto.quantidade =
+            Number(produto.quantidade) - Number(compra.quantidade);
+    }
+
+    // Remove lançamento do financeiro
+    let financeiro =
+    JSON.parse(localStorage.getItem("financeiro")) || [];
+
+    financeiro = financeiro.filter(f => !(
+        f.tipo === "Saída" &&
+        f.descricao === "Compra - " + compra.produto &&
+        Number(f.valor) === Number(compra.valor)
+    ));
+
+    localStorage.setItem("financeiro", JSON.stringify(financeiro));
+
+    // Remove compra
+    compras.splice(indice,1);
+
+    // Salva
+    localStorage.setItem("compras", JSON.stringify(compras));
+    localStorage.setItem("produtos", JSON.stringify(produtos));
+
+    atualizarTabela();
+    carregarProdutos();
+
+    alert("Compra excluída com sucesso!");
+
+}
