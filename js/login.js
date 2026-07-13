@@ -1,49 +1,59 @@
 // ======================================
-// Linge & Seduções ERP
-// Sistema de Login
+// Login do Sistema
 // ======================================
 
+// Cria o administrador padrão
+if (!localStorage.getItem("usuarios")) {
 
-// Criar senha padrão no primeiro acesso
+    const usuarios = [
 
-if(!localStorage.getItem("senhaERP")){
+        {
+            usuario: "admin",
+            senha: "1234",
+            nome: "Administrador",
+            nivel: "Administrador"
+        }
 
-    localStorage.setItem("senhaERP","1234");
+    ];
+
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
 }
 
-
-// ======================================
-// Entrar no Sistema
 // ======================================
 
-function entrar(){
+function entrar() {
 
-    const senhaDigitada = document.getElementById("senha").value;
+    const usuarioDigitado =
+        document.getElementById("usuario").value.trim();
 
-    const senhaCorreta = localStorage.getItem("senhaERP");
+    const senhaDigitada =
+        document.getElementById("senha").value;
 
+    const usuarios =
+        JSON.parse(localStorage.getItem("usuarios")) || [];
 
-    if(senhaDigitada === senhaCorreta){
+    const usuario = usuarios.find(u =>
 
+        u.usuario === usuarioDigitado &&
+        u.senha === senhaDigitada
 
-        // Criar sessão de usuário
+    );
 
-       localStorage.setItem("usuarioLogado","sim");
+    if (usuario) {
 
+        localStorage.setItem("usuarioLogado", "sim");
 
-        // Ir para Dashboard
+        localStorage.setItem("usuarioNome", usuario.nome);
+
+        localStorage.setItem("usuarioNivel", usuario.nivel);
 
         window.location.href = "dashboard.html";
 
+    } else {
 
-    }else{
-
-
-        alert("Senha incorreta!");
-
+        alert("Usuário ou senha incorretos.");
 
     }
-
 
 }
