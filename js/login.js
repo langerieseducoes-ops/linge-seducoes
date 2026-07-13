@@ -12,7 +12,7 @@ if (!localStorage.getItem("usuarios")) {
             usuario: "admin",
             senha: "1234",
             nome: "Administrador",
-            nivel: "Administrador"
+            nivel: "Admin"
         }
 
     ];
@@ -45,8 +45,13 @@ function entrar() {
     }
 
     // Sessão
-    localStorage.setItem("usuarioLogado", "sim");
-    localStorage.setItem("usuarioAtual", JSON.stringify(encontrado));
+   localStorage.setItem("usuarioLogado", JSON.stringify({
+
+    usuario: encontrado.usuario,
+    nome: encontrado.nome,
+    perfil: encontrado.nivel
+
+}));
 
     window.location.href = "dashboard.html";
 
