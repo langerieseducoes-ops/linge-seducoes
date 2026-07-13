@@ -3,43 +3,51 @@
 // Banco de Usuários
 // ======================================
 
-if (!localStorage.getItem("usuarios")) {
+let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 
-    const usuarios = [
+// ======================================
+// Cria usuários padrão somente
+// na primeira execução
+// ======================================
+
+if (usuarios.length === 0) {
+
+    usuarios = [
 
         {
+            nome: "Administrador",
             usuario: "admin",
             senha: "1234",
-            nome: "Administrador",
-            nivel: "admin"
+            perfil: "Admin",
+            ativo: true
         },
 
         {
+            nome: "Gerente",
             usuario: "gerente",
             senha: "1234",
-            nome: "Gerente",
-            nivel: "gerente"
+            perfil: "Gerente",
+            ativo: true
         },
 
         {
+            nome: "Vendedor",
             usuario: "vendedor",
             senha: "1234",
-            nome: "Vendedor",
-            nivel: "vendedor"
+            perfil: "Vendedor",
+            ativo: true
         },
 
         {
+            nome: "Estoquista",
             usuario: "estoquista",
             senha: "1234",
-            nome: "Estoquista",
-            nivel: "estoquista"
+            perfil: "Estoquista",
+            ativo: true
         }
 
     ];
 
-    localStorage.setItem(
-        "usuarios",
-        JSON.stringify(usuarios)
-    );
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
 }
