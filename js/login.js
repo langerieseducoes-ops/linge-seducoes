@@ -1,8 +1,9 @@
 // ======================================
-// Login do Sistema
+// Linge & Seduções ERP
+// Sistema de Login Profissional
 // ======================================
 
-// Cria o administrador padrão
+// Cria o administrador no primeiro acesso
 if (!localStorage.getItem("usuarios")) {
 
     const usuarios = [
@@ -21,39 +22,32 @@ if (!localStorage.getItem("usuarios")) {
 }
 
 // ======================================
+// Entrar
+// ======================================
 
 function entrar() {
 
-    const usuarioDigitado =
-        document.getElementById("usuario").value.trim();
+    const usuario = document.getElementById("usuario").value.trim();
+    const senha = document.getElementById("senha").value;
 
-    const senhaDigitada =
-        document.getElementById("senha").value;
+    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 
-    const usuarios =
-        JSON.parse(localStorage.getItem("usuarios")) || [];
-
-    const usuario = usuarios.find(u =>
-
-        u.usuario === usuarioDigitado &&
-        u.senha === senhaDigitada
-
+    const encontrado = usuarios.find(u =>
+        u.usuario === usuario &&
+        u.senha === senha
     );
 
-    if (usuario) {
+    if (!encontrado) {
 
-        localStorage.setItem("usuarioLogado", "sim");
-
-        localStorage.setItem("usuarioNome", usuario.nome);
-
-        localStorage.setItem("usuarioNivel", usuario.nivel);
-
-        window.location.href = "dashboard.html";
-
-    } else {
-
-        alert("Usuário ou senha incorretos.");
+        alert("Usuário ou senha inválidos.");
+        return;
 
     }
+
+    // Sessão
+    localStorage.setItem("usuarioLogado", "sim");
+    localStorage.setItem("usuarioAtual", JSON.stringify(encontrado));
+
+    window.location.href = "dashboard.html";
 
 }
