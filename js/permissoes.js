@@ -1,80 +1,32 @@
 // ======================================
 // Linge & Seduções ERP
-// Permissões dos Usuários
+// Central de Permissões
 // ======================================
 
-const permissoes = {
+const usuarioAtual =
+JSON.parse(localStorage.getItem("usuarioLogado"));
 
-    Admin: {
+function temPermissao(perfis){
 
-        produtos: true,
-        vendas: true,
-        compras: true,
-        clientes: true,
-        fornecedores: true,
-        categorias: true,
-        financeiro: true,
-        relatorios: true,
-        usuarios: true,
+    if(!usuarioAtual){
+        return false;
+    }
 
-        cadastrar: true,
-        editar: true,
-        excluir: true
+    return perfis.includes(usuarioAtual.perfil);
 
-    },
+}
+// Apenas Administrador pode acessar
 
-    Gerente: {
+if(
+    window.location.pathname.endsWith("usuarios.html")
+){
 
-        produtos: true,
-        vendas: true,
-        compras: true,
-        clientes: true,
-        fornecedores: true,
-        categorias: true,
-        financeiro: true,
-        relatorios: true,
-        usuarios: false,
+    if(!temPermissao(["Admin"])){
 
-        cadastrar: true,
-        editar: true,
-        excluir: false
+        alert("Você não possui permissão para acessar esta página.");
 
-    },
-
-    Vendedor: {
-
-        produtos: true,
-        vendas: true,
-        compras: false,
-        clientes: true,
-        fornecedores: false,
-        categorias: false,
-        financeiro: false,
-        relatorios: true,
-        usuarios: false,
-
-        cadastrar: true,
-        editar: false,
-        excluir: false
-
-    },
-
-    Estoquista: {
-
-        produtos: true,
-        vendas: false,
-        compras: true,
-        clientes: false,
-        fornecedores: true,
-        categorias: true,
-        financeiro: false,
-        relatorios: true,
-        usuarios: false,
-
-        cadastrar: true,
-        editar: true,
-        excluir: false
+        window.location.href="dashboard.html";
 
     }
 
-};
+}
