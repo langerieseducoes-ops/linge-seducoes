@@ -23,12 +23,12 @@ body{
 
 .login-box{
 
-    width:400px;
+    width:100%;
+    max-width:400px;
     background:#fff;
     padding:40px;
     border-radius:12px;
     box-shadow:0 10px 30px rgba(0,0,0,.20);
-
 }
 
 .login-box h1{
@@ -102,13 +102,26 @@ autocomplete="username">
 <input
 id="senha"
 type="password"
-placeholder="Senha">
-
+placeholder="Senha"
+autocomplete="current-password">
+    
 <button onclick="entrar()">
 Entrar
 </button>
 
 </div>
+
+<script>
+document.addEventListener("keydown", function(e){
+
+    if(e.key === "Enter"){
+
+        entrar();
+
+    }
+
+});
+</script>
 
 <script src="js/login.js"></script>
 
