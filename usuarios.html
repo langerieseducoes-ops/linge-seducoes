@@ -42,7 +42,74 @@
 
 <h1>Cadastro de Usuários</h1>
 
-<p>Este módulo será utilizado para cadastrar e administrar os usuários do sistema.</p>
+<div class="painel-resumo">
+
+    <div class="card">
+        <h3>Total de Usuários</h3>
+        <h2 id="totalUsuarios">0</h2>
+    </div>
+
+</div>
+
+<div class="cadastro">
+
+    <input id="nome" placeholder="Nome">
+
+    <input id="usuario" placeholder="Usuário">
+
+    <input
+        id="senha"
+        type="password"
+        placeholder="Senha">
+
+    <select id="perfil">
+
+        <option value="">Selecione o Perfil</option>
+
+        <option>Admin</option>
+        <option>Gerente</option>
+        <option>Vendedor</option>
+        <option>Estoquista</option>
+
+    </select>
+
+    <button
+        class="botao-adicionar"
+        onclick="cadastrarUsuario()">
+
+        Cadastrar Usuário
+
+    </button>
+
+</div>
+
+<hr>
+
+<input
+    id="pesquisaUsuario"
+    placeholder="Pesquisar usuário..."
+    onkeyup="pesquisarUsuario()">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Nome</th>
+<th>Usuário</th>
+<th>Perfil</th>
+<th>Ações</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tabelaUsuarios">
+
+</tbody>
+
+</table>
 
 </div>
 
