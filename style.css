@@ -16,6 +16,8 @@ body{
     background:#202940;
     color:white;
     padding:20px;
+    overflow-y:auto;
+    overflow-x:hidden;
 }
 
 .menu h2{
@@ -65,6 +67,11 @@ h1{
     border-radius:10px;
     padding:20px;
     box-shadow:0 2px 8px rgba(0,0,0,.1);
+    transition:.25s;
+}
+.card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
 }
 
 .card h3{
@@ -83,12 +90,20 @@ h1{
     margin:20px 0;
 }
 
-input,select{
+input,
+select{
     padding:10px;
     border:1px solid #ccc;
     border-radius:5px;
+    transition:.25s;
 }
 
+input:focus,
+select:focus{
+    outline:none;
+    border-color:#0b8f42;
+    box-shadow:0 0 6px rgba(11,143,66,.25);
+}
 button{
     padding:10px;
     border:none;
@@ -96,6 +111,7 @@ button{
     background:#202940;
     color:white;
     cursor:pointer;
+    transition:.25s;
 }
 
 button:hover{
@@ -120,9 +136,13 @@ th{
     color:white;
 }
 
-.btn{
+..btn{
     padding:5px 10px;
     margin:2px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    transition:.25s;
 }
 /* Botão Salvar Produto */
 .botao-adicionar{
@@ -211,15 +231,14 @@ hr{
         display:block;
     }
 
-    .menu,
-    .cadastro,
-    .painel-resumo,
-    .acoes,
-    #pesquisa,
-    button{
-        display:none !important;
-    }
-
+ .menu,
+.cadastro,
+.painel-resumo,
+.acoes,
+input[id^="pesquisa"],
+button{
+    display:none !important;
+}
     .conteudo{
         width:100%;
         margin:0;
