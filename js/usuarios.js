@@ -59,6 +59,8 @@ function atualizarTabela() {
 
     usuarios.forEach((u, indice) => {
 
+    if(!u.ativo) return;
+
         tabela.innerHTML += `
 
         <tr>
@@ -95,7 +97,13 @@ function atualizarTabela() {
 
     });
 
-    document.getElementById("totalUsuarios").innerHTML = usuarios.length;
+    const total = document.getElementById("totalUsuarios");
+
+if(total){
+
+    total.textContent = usuarios.length;
+
+}
 
 }
 // ======================================
@@ -115,7 +123,19 @@ function editarUsuario(indice){
 
 function excluirUsuario(indice){
 
-    alert("Etapa de exclusão será criada na próxima fase.");
+    if(!confirm("Deseja inativar este usuário?")){
+
+        return;
+
+    }
+
+    usuarios[indice].ativo = false;
+
+    salvarUsuarios();
+
+    atualizarTabela();
+
+    alert("Usuário inativado com sucesso.");
 
 }
 // ======================================
@@ -124,7 +144,11 @@ function excluirUsuario(indice){
 
 function cadastrarUsuario(){
 
-    const nome = document.getElementById("nome").value.trim();
+   const nome = document
+    .getElementById("nome")
+    .value
+    .trim()
+    .replace(/\s+/g," ");
     const usuario = document.getElementById("usuario").value.trim();
     const senha = document.getElementById("senha").value;
     const perfil = document.getElementById("perfil").value;
@@ -134,14 +158,17 @@ function cadastrarUsuario(){
         usuario === "" ||
         senha === "" ||
         perfil === ""
-    ){
+    )
+    {
 
         alert("Preencha todos os campos.");
         return;
 
     }
 
-    const existe = usuarios.find(u => u.usuario === usuario);
+    const existe = usuarios.find(
+    u => u.usuario.toLowerCase() === usuario.toLowerCase()
+);
 
     if(existe){
 
@@ -156,7 +183,7 @@ function cadastrarUsuario(){
 
         nome: nome,
 
-        usuario: usuario,
+        usuario: usuario.toLowerCase(),
 
         senha: senha,
 
@@ -174,11 +201,16 @@ function cadastrarUsuario(){
 
     atualizarTabela();
 
+    limparFormulario();
+    
+    alert("Usuário cadastrado com sucesso!");
+
+}
+    function limparFormulario(){
+
     document.getElementById("nome").value = "";
     document.getElementById("usuario").value = "";
     document.getElementById("senha").value = "";
     document.getElementById("perfil").value = "";
-
-    alert("Usuário cadastrado com sucesso!");
 
 }
