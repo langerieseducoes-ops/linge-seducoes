@@ -3,22 +3,49 @@
 // Segurança do Sistema
 // ======================================
 
-const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+const usuarioLogado =
+JSON.parse(localStorage.getItem("usuarioLogado"));
 
-if (!usuarioLogado) {
+const perfilUsuario =
+usuarioLogado?.perfil || "";
 
-    window.location.href = "index.html";
+// ======================================
+// Verificar Login
+// ======================================
+
+function verificarLogin(){
+
+    if(!usuarioLogado){
+
+        window.location.href="index.html";
+
+    }
 
 }
 
-// Função para sair
+verificarLogin();
+
+// ======================================
+// Usuário Atual
+// ======================================
+
+function usuarioAtual(){
+
+    return usuarioLogado;
+
+}
+
+// ======================================
+// Sair do Sistema
+// ======================================
+
 function sair(){
 
     if(confirm("Deseja realmente sair do sistema?")){
 
         localStorage.removeItem("usuarioLogado");
 
-        window.location.href = "index.html";
+        window.location.href="index.html";
 
     }
 
