@@ -1,32 +1,72 @@
 // ======================================
 // Linge & Seduções ERP
-// Central de Permissões
+// Controle de Permissões
 // ======================================
 
-const usuarioAtual =
-JSON.parse(localStorage.getItem("usuarioLogado"));
+const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-function temPermissao(perfis){
+if (!usuario) {
 
-    if(!usuarioAtual){
-        return false;
-    }
-
-    return perfis.includes(usuarioAtual.perfil);
+    window.location.href = "index.html";
 
 }
-// Apenas Administrador pode acessar
 
-if(
-    window.location.pathname.endsWith("usuarios.html")
-){
+const perfil = usuario.perfil;
 
-    if(!temPermissao(["Admin"])){
+const paginaAtual = window.location.pathname.split("/").pop();
 
-        alert("Você não possui permissão para acessar esta página.");
+// ======================================
+// Ocultar Menu
+// ======================================
 
-        window.location.href="dashboard.html";
+function ocultarMenu(pagina){
 
-    }
+    document.querySelectorAll("a").forEach(link => {
+
+        if(link.getAttribute("href") === pagina){
+
+            link.style.display = "none";
+
+        }
+
+    });
+
+}
+
+// ======================================
+// Acesso Negado
+// ======================================
+
+function acessoNegado(){
+
+    alert("Você não possui permissão para acessar esta página.");
+
+    window.location.href = "dashboard.html";
+
+}
+
+// ======================================
+// Permissões
+// ======================================
+
+switch(perfil){
+
+    case "Admin":
+
+        // Acesso total
+
+        break;
+
+    case "Gerente":
+
+        break;
+
+    case "Vendedor":
+
+        break;
+
+    case "Estoquista":
+
+        break;
 
 }
