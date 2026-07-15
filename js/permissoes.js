@@ -57,16 +57,62 @@ switch(perfil){
 
         break;
 
-    case "Gerente":
+   case "Gerente":
 
-        break;
+    ocultarMenu("usuarios.html");
 
-    case "Vendedor":
+    if(paginaAtual === "usuarios.html"){
 
-        break;
+        acessoNegado();
 
-    case "Estoquista":
+    }
 
-        break;
+    break;
+
+  case "Vendedor":
+
+    ocultarMenu("usuarios.html");
+    ocultarMenu("financeiro.html");
+    ocultarMenu("compras.html");
+    ocultarMenu("fornecedores.html");
+    ocultarMenu("categorias.html");
+
+    if(
+
+        paginaAtual === "usuarios.html" ||
+        paginaAtual === "financeiro.html" ||
+        paginaAtual === "compras.html" ||
+        paginaAtual === "fornecedores.html" ||
+        paginaAtual === "categorias.html"
+
+    ){
+
+        acessoNegado();
+
+    }
+
+    break;
+        
+   case "Estoquista":
+
+    ocultarMenu("usuarios.html");
+    ocultarMenu("clientes.html");
+    ocultarMenu("vendas.html");
+    ocultarMenu("financeiro.html");
+
+    if(
+
+        paginaAtual === "usuarios.html" ||
+        paginaAtual === "clientes.html" ||
+        paginaAtual === "vendas.html" ||
+        paginaAtual === "financeiro.html"
+
+    ){
+
+        acessoNegado();
+
+    }
+
+    break;
 
 }
