@@ -19,12 +19,22 @@ function entrar() {
 
     const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 
+    if (usuarios.length === 0) {
+
+    alert("Nenhum usuário cadastrado.");
+
+    return;
+
+}
+
     // Procura usuário ativo
-    const encontrado = usuarios.find(u =>
-        u.usuario === usuario &&
-        u.senha === senha &&
-        u.ativo === true
-    );
+   const encontrado = usuarios.find(u =>
+
+    u.usuario.toLowerCase() === usuario.toLowerCase() &&
+    u.senha === senha &&
+    (u.ativo === true || u.ativo === undefined)
+
+);
 
     // Usuário não encontrado
     if (!encontrado) {
@@ -47,14 +57,15 @@ function entrar() {
     );
 
     // Cria sessão
-    localStorage.setItem("usuarioLogado", JSON.stringify({
+   localStorage.setItem("usuarioLogado", JSON.stringify({
 
-        id: encontrado.id,
-        nome: encontrado.nome,
-        usuario: encontrado.usuario,
-        perfil: encontrado.perfil
+    id: encontrado.id,
+    nome: encontrado.nome,
+    usuario: encontrado.usuario,
+    perfil: encontrado.perfil,
+    login: new Date().toLocaleString("pt-BR")
 
-    }));
+}));
 
     // Limpa formulário
     document.getElementById("usuario").value = "";
