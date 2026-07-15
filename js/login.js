@@ -1,28 +1,6 @@
 // ======================================
 // Linge & Seduções ERP
-// Sistema de Login Profissional
-// ======================================
-
-// Cria o administrador no primeiro acesso
-if (!localStorage.getItem("usuarios")) {
-
-    const usuarios = [
-
-        {
-            usuario: "admin",
-            senha: "1234",
-            nome: "Administrador",
-            nivel: "Admin"
-        }
-
-    ];
-
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
-
-}
-
-// ======================================
-// Entrar
+// Sistema de Login
 // ======================================
 
 function entrar() {
@@ -30,29 +8,59 @@ function entrar() {
     const usuario = document.getElementById("usuario").value.trim();
     const senha = document.getElementById("senha").value;
 
-    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    // Validação dos campos
+    if (usuario === "" || senha === "") {
 
-    const encontrado = usuarios.find(u =>
-        u.usuario === usuario &&
-        u.senha === senha
-    );
+        alert("Informe o usuário e a senha.");
 
-    if (!encontrado) {
-
-        alert("Usuário ou senha inválidos.");
         return;
 
     }
 
-    // Sessão
-   localStorage.setItem("usuarioLogado", JSON.stringify({
+    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 
-    usuario: encontrado.usuario,
-    nome: encontrado.nome,
-    perfil: encontrado.nivel
+    // Procura usuário ativo
+    const encontrado = usuarios.find(u =>
+        u.usuario === usuario &&
+        u.senha === senha &&
+        u.ativo === true
+    );
 
-}));
+    // Usuário não encontrado
+    if (!encontrado) {
 
+        alert("Usuário ou senha inválidos.");
+
+        document.getElementById("senha").value = "";
+        document.getElementById("senha").focus();
+
+        return;
+
+    }
+
+    // Atualiza último login
+    encontrado.ultimoLogin = new Date().toLocaleString("pt-BR");
+
+    localStorage.setItem(
+        "usuarios",
+        JSON.stringify(usuarios)
+    );
+
+    // Cria sessão
+    localStorage.setItem("usuarioLogado", JSON.stringify({
+
+        id: encontrado.id,
+        nome: encontrado.nome,
+        usuario: encontrado.usuario,
+        perfil: encontrado.perfil
+
+    }));
+
+    // Limpa formulário
+    document.getElementById("usuario").value = "";
+    document.getElementById("senha").value = "";
+
+    // Abre o sistema
     window.location.href = "dashboard.html";
 
 }
