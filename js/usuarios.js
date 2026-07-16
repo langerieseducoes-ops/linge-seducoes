@@ -8,6 +8,8 @@
 let usuarios =
 JSON.parse(localStorage.getItem("usuarios")) || [];
 
+let indiceEdicao = -1;
+
 // ======================================
 // Primeiro acesso
 // ======================================
@@ -69,7 +71,8 @@ function atualizarTabela() {
 
             <td>${u.usuario}</td>
 
-            <td>${u.perfil}</td>
+           <td>${u.perfil}</td>
+           <td>${u.ultimoLogin || "-"}</td>
 
             <td>
 
@@ -97,11 +100,12 @@ function atualizarTabela() {
 
     });
 
-    const total = document.getElementById("totalUsuarios");
+   const totalUsuarios = document.getElementById("totalUsuarios");
 
-if(total){
+if (totalUsuarios) {
 
-    total.textContent = usuarios.length;
+    totalUsuarios.textContent =
+        usuarios.filter(u => u.ativo).length;
 
 }
 
@@ -117,11 +121,47 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 function editarUsuario(indice){
 
-    alert("Etapa de edição será criada na próxima fase.");
+    indiceEdicao = indice;
+
+    document.getElementById("nome").value =
+        usuarios[indice].nome;
+
+    document.getElementById("usuario").value =
+        usuarios[indice].usuario;
+
+    document.getElementById("senha").value =
+        usuarios[indice].senha;
+
+    document.getElementById("perfil").value =
+        usuarios[indice].perfil;
+
+    const botao = document.getElementById("btnSalvar");
+
+    if(botao){
+
+        botao.textContent = "Atualizar Usuário";
+
+    }
+
+    window.scrollTo({
+
+        top: 0,
+        behavior: "smooth"
+
+    });
+
+    document.getElementById("nome").focus();
 
 }
-
 function excluirUsuario(indice){
+
+    if (usuarios[indice].usuario === "admin") {
+
+        alert("O administrador principal não pode ser inativado.");
+
+        return;
+
+    }
 
     if(!confirm("Deseja inativar este usuário?")){
 
@@ -149,7 +189,11 @@ function cadastrarUsuario(){
     .value
     .trim()
     .replace(/\s+/g," ");
-    const usuario = document.getElementById("usuario").value.trim();
+   const usuario = document
+    .getElementById("usuario")
+    .value
+    .trim()
+    .toLowerCase();
     const senha = document.getElementById("senha").value;
     const perfil = document.getElementById("perfil").value;
 
@@ -163,11 +207,13 @@ function cadastrarUsuario(){
 
         alert("Preencha todos os campos.");
         return;
-
     }
+ const existe = usuarios.find((u, indice) =>
 
-    const existe = usuarios.find(
-    u => u.usuario.toLowerCase() === usuario.toLowerCase()
+    u.usuario.toLowerCase() === usuario.toLowerCase() &&
+    u.ativo &&
+    indice !== indiceEdicao
+
 );
 
     if(existe){
@@ -177,13 +223,26 @@ function cadastrarUsuario(){
 
     }
 
+ if (indiceEdicao >= 0) {
+
+    usuarios[indiceEdicao].nome = nome;
+    usuarios[indiceEdicao].usuario = usuario;
+    usuarios[indiceEdicao].senha = senha;
+    usuarios[indiceEdicao].perfil = perfil;
+
+    indiceEdicao = -1;
+
+    alert("Usuário atualizado com sucesso!");
+
+} else {
+
     usuarios.push({
 
         id: Date.now(),
 
         nome: nome,
 
-        usuario: usuario.toLowerCase(),
+        usuario: usuario,
 
         senha: senha,
 
@@ -197,20 +256,34 @@ function cadastrarUsuario(){
 
     });
 
-    salvarUsuarios();
-
-    atualizarTabela();
-
-    limparFormulario();
-    
     alert("Usuário cadastrado com sucesso!");
 
 }
-    function limparFormulario(){
+
+salvarUsuarios();
+
+atualizarTabela();
+
+limparFormulario();
+
+}
+function limparFormulario(){
 
     document.getElementById("nome").value = "";
     document.getElementById("usuario").value = "";
     document.getElementById("senha").value = "";
     document.getElementById("perfil").value = "";
+
+    indiceEdicao = -1;
+
+    const botao = document.getElementById("btnSalvar");
+
+    if(botao){
+
+        botao.textContent = "Cadastrar Usuário";
+
+    }
+
+    document.getElementById("nome").focus();
 
 }
