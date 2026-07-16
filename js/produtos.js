@@ -154,7 +154,15 @@ function limparFormulario() {
     document.getElementById("quantidade").value = "";
 
     indiceEdicao = -1;
+const botao = document.getElementById("btnSalvar");
 
+if (botao) {
+
+    botao.textContent = "Cadastrar Produto";
+
+}
+
+document.getElementById("codigo").focus();
 }
 // ======================================
 // Adicionar Produto
@@ -212,20 +220,31 @@ if(indiceEdicao === -1){
             quantidade
         });
 
-    }else{
-
-        produtos[indiceEdicao] = {
-            codigo,
-            produto,
-            categoria,
-            tamanho,
-            cor,
-            custo,
-            venda,
-            quantidade
-        };
-
     }
+else{
+
+    produtos[indiceEdicao] = {
+        codigo,
+        produto,
+        categoria,
+        tamanho,
+        cor,
+        custo,
+        venda,
+        quantidade
+    };
+
+}
+if (indiceEdicao >= 0) {
+
+    alert("Produto atualizado com sucesso!");
+
+}
+else {
+
+    alert("Produto cadastrado com sucesso!");
+
+}
 
 salvarProdutos();
 
@@ -234,7 +253,6 @@ limparFormulario();
 carregarCategorias();
 
 atualizarTabela();
-
 }
 // ======================================
 // Editar Produto
@@ -256,7 +274,22 @@ function editarProduto(indice){
     document.getElementById("quantidade").value = p.quantidade;
 
     indiceEdicao = indice;
+const botao = document.getElementById("btnSalvar");
 
+if (botao) {
+
+    botao.textContent = "Atualizar Produto";
+
+}
+
+window.scrollTo({
+
+    top: 0,
+    behavior: "smooth"
+
+});
+
+document.getElementById("codigo").focus();
 }
 
 // ======================================
