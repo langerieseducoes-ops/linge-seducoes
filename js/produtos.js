@@ -98,7 +98,11 @@ function atualizarTabela(lista = produtos){
 
     tabela.innerHTML = "";
 
-    lista.forEach((item, indice)=>{
+    lista.forEach((item) => {
+
+        const indiceReal = produtos.findIndex(
+            p => p.codigo === item.codigo
+        );
 
         tabela.innerHTML += `
         <tr>
@@ -107,34 +111,35 @@ function atualizarTabela(lista = produtos){
             <td>${item.categoria}</td>
             <td>${item.tamanho}</td>
             <td>${item.cor}</td>
- <td>${Number(item.custo).toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL"
-})}</td>
 
-<td>${Number(item.venda).toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL"
-})}</td>
+            <td>${Number(item.custo).toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL"
+            })}</td>
+
+            <td>${Number(item.venda).toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL"
+            })}</td>
+
             <td>${item.quantidade}</td>
 
             <td>
-                <button class="btn btn-editar" onclick="editarProduto(${indice})">
+                <button class="btn btn-editar" onclick="editarProduto(${indiceReal})">
                     ✏️
                 </button>
 
-                <button class="btn btn-excluir" onclick="excluirProduto(${indice})">
+                <button class="btn btn-excluir" onclick="excluirProduto(${indiceReal})">
                     🗑️
                 </button>
             </td>
         </tr>
         `;
-
     });
 
     atualizarResumo();
-
 }
+
 // ======================================
 // Limpar Formulário
 // ======================================
@@ -145,8 +150,12 @@ function limparFormulario() {
     document.getElementById("produto").value = "";
 
     carregarCategorias();
-    document.getElementById("categoria").selectedIndex = 0;
+    
+  const categoria = document.getElementById("categoria");
 
+if (categoria) {
+    categoria.selectedIndex = 0;
+}
     document.getElementById("tamanho").value = "";
     document.getElementById("cor").value = "";
     document.getElementById("custo").value = "";
@@ -162,7 +171,12 @@ if (botao) {
 
 }
 
-document.getElementById("codigo").focus();
+const codigo = document.getElementById("codigo");
+
+if (codigo) {
+    codigo.focus();
+    codigo.disabled = false;
+}
 }
 // ======================================
 // Adicionar Produto
@@ -179,15 +193,16 @@ function adicionarProduto(){
     const venda = parseFloat(document.getElementById("venda").value);
     const quantidade = parseInt(document.getElementById("quantidade").value);
 
-    if(
+   if (
     !codigo ||
     !produto ||
     !categoria ||
+    !tamanho ||
     !cor ||
     isNaN(custo) ||
     isNaN(venda) ||
     isNaN(quantidade)
-){
+) {
     alert("Preencha todos os campos.");
     return;
 }
@@ -260,6 +275,11 @@ atualizarTabela();
 
 function editarProduto(indice){
 
+    if (!produtos[indice]) {
+    alert("Produto não encontrado.");
+    return;
+}
+
     const p = produtos[indice];
 
     carregarCategorias();
@@ -289,9 +309,13 @@ window.scrollTo({
 
 });
 
-document.getElementById("codigo").focus();
-}
+const codigo = document.getElementById("codigo");
 
+if (codigo) {
+    codigo.focus();
+    codigo.disabled = true;
+}
+}
 // ======================================
 // Excluir Produto
 // ======================================
@@ -303,12 +327,12 @@ function excluirProduto(indice){
         produtos.splice(indice,1);
 
         salvarProdutos();
-        
-        produtos = JSON.parse(localStorage.getItem("produtos")) || [];
        
         carregarCategorias();
 
         atualizarTabela();
+
+        limparFormulario();
 
     }
 
@@ -320,19 +344,17 @@ function excluirProduto(indice){
 
 function pesquisarProduto(){
 
-    const texto = document
-        .getElementById("pesquisa")
-        .value
-        .toLowerCase();
+ const pesquisa = document.getElementById("pesquisa");
 
-    const resultado = produtos.filter(p=>
+if (!pesquisa) return;
 
-        p.produto.toLowerCase().includes(texto) ||
-        p.codigo.toLowerCase().includes(texto) ||
-        p.categoria.toLowerCase().includes(texto)
+const texto = pesquisa.value.toLowerCase();
 
-    );
-
+ const resultado = produtos.filter(p =>
+    (p.produto || "").toLowerCase().includes(texto) ||
+    (p.codigo || "").toLowerCase().includes(texto) ||
+    (p.categoria || "").toLowerCase().includes(texto)
+);
     atualizarTabela(resultado);
 
 }
@@ -342,16 +364,24 @@ function pesquisarProduto(){
 // ======================================
 
 document.addEventListener("DOMContentLoaded", () => {
+
 window.addEventListener("storage", () => {
 
-    carregarCategorias();
-
-});
     produtos = JSON.parse(localStorage.getItem("produtos")) || [];
 
     carregarCategorias();
 
     atualizarTabela();
+
+});
+
+atualizarTabela();
+
+const codigo = document.getElementById("codigo");
+
+if (codigo) {
+    limparFormulario();
+}
 
 });
 // ======================================
