@@ -13,10 +13,12 @@ let fornecedores = JSON.parse(localStorage.getItem("fornecedores")) || [];
 
 function carregarFornecedores(){
 
-    const select = document.getElementById("fornecedorCompra");
+  const select = document.getElementById("fornecedorCompra");
 
-    select.innerHTML = '<option value="">Selecione o fornecedor</option>';
+if (!select) return;
 
+select.innerHTML = '<option value="">Selecione o fornecedor</option>';
+    
     fornecedores.forEach((f, indice)=>{
 
         select.innerHTML += `
@@ -37,7 +39,9 @@ function carregarProdutos(){
 
     const select = document.getElementById("produtoCompra");
 
-    select.innerHTML = '<option value="">Selecione o produto</option>';
+if (!select) return;
+
+select.innerHTML = '<option value="">Selecione o produto</option>';
 
     produtos.forEach((p, indice)=>{
 
@@ -57,10 +61,19 @@ function carregarProdutos(){
 
 function registrarCompra(){
 
-    const fornecedor = document.getElementById("fornecedorCompra").value;
-    const produtoIndice = document.getElementById("produtoCompra").value;
-    const quantidade = Number(document.getElementById("quantidadeCompra").value);
-    const custo = Number(document.getElementById("custoCompra").value);
+    const campoFornecedor = document.getElementById("fornecedorCompra");
+const campoProduto = document.getElementById("produtoCompra");
+const campoQuantidade = document.getElementById("quantidadeCompra");
+const campoCusto = document.getElementById("custoCompra");
+
+if (!campoFornecedor || !campoProduto || !campoQuantidade || !campoCusto) {
+    return;
+}
+
+const fornecedor = campoFornecedor.value;
+const produtoIndice = campoProduto.value;
+const quantidade = Number(campoQuantidade.value);
+const custo = Number(campoCusto.value);
 
     if(
         fornecedor === "" ||
@@ -117,10 +130,10 @@ function registrarCompra(){
 
     carregarProdutos();
 
-    document.getElementById("fornecedorCompra").value="";
-    document.getElementById("produtoCompra").value="";
-    document.getElementById("quantidadeCompra").value="";
-    document.getElementById("custoCompra").value="";
+   campoFornecedor.value = "";
+campoProduto.value = "";
+campoQuantidade.value = "";
+campoCusto.value = "";
 
     alert("Compra registrada com sucesso!");
 
@@ -132,9 +145,11 @@ function registrarCompra(){
 
 function atualizarTabela(){
 
-    const tabela=document.getElementById("tabelaCompras");
+  const tabela = document.getElementById("tabelaCompras");
 
-    tabela.innerHTML="";
+if (!tabela) return;
+
+tabela.innerHTML = "";
 
     let total=0;
 
@@ -171,20 +186,20 @@ currency:"BRL"
 `;
 
     });
+const totalCompras = document.getElementById("totalCompras");
+const valorCompras = document.getElementById("valorCompras");
 
-    document.getElementById("totalCompras").innerHTML=compras.length;
-
-    document.getElementById("valorCompras").innerHTML=
-
-    total.toLocaleString("pt-BR",{
-
-        style:"currency",
-        currency:"BRL"
-
-    });
-
+if (totalCompras) {
+    totalCompras.innerHTML = compras.length;
 }
 
+if (valorCompras) {
+    valorCompras.innerHTML = total.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+}
+}
 // ======================================
 
 document.addEventListener("DOMContentLoaded",()=>{
@@ -207,6 +222,11 @@ function excluirCompra(indice){
     }
 
     const compra = compras[indice];
+
+    if (!compra) {
+        alert("Compra não encontrada.");
+        return;
+    }
 
     // Devolve o estoque ao estado anterior
     const produto = produtos.find(p => p.produto === compra.produto);
