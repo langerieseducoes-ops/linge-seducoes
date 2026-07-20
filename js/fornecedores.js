@@ -24,10 +24,17 @@ function atualizarResumoFornecedores() {
 // Cadastrar fornecedor
 function cadastrarFornecedor() {
 
-    const empresa = document.getElementById("empresaFornecedor").value.trim();
-    const contato = document.getElementById("contatoFornecedor").value.trim();
-    const telefone = document.getElementById("telefoneFornecedor").value.trim();
-    const email = document.getElementById("emailFornecedor").value.trim();
+  const campoEmpresa = document.getElementById("empresaFornecedor");
+const campoContato = document.getElementById("contatoFornecedor");
+const campoTelefone = document.getElementById("telefoneFornecedor");
+const campoEmail = document.getElementById("emailFornecedor");
+
+if (!campoEmpresa || !campoContato || !campoTelefone || !campoEmail) return;
+
+const empresa = campoEmpresa.value.trim();
+const contato = campoContato.value.trim();
+const telefone = campoTelefone.value.trim();
+const email = campoEmail.value.trim();
 
     if (!empresa) {
         alert("Informe o nome da empresa.");
@@ -44,10 +51,10 @@ function cadastrarFornecedor() {
 
     salvarFornecedores();
 
-    document.getElementById("empresaFornecedor").value = "";
-    document.getElementById("contatoFornecedor").value = "";
-    document.getElementById("telefoneFornecedor").value = "";
-    document.getElementById("emailFornecedor").value = "";
+ campoEmpresa.value = "";
+campoContato.value = "";
+campoTelefone.value = "";
+campoEmail.value = "";
 
     listarFornecedores();
 
