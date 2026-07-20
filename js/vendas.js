@@ -100,10 +100,16 @@ function atualizarTabelaVendas() {
 
 function registrarVenda() {
 
-    const cliente = document.getElementById("cliente").value.trim();
-    const indiceProduto = document.getElementById("produtoVenda").value;
-    const quantidade = parseInt(document.getElementById("quantidadeVenda").value);
+    const campoCliente = document.getElementById("cliente");
+const campoProduto = document.getElementById("produtoVenda");
+const campoQuantidade = document.getElementById("quantidadeVenda");
 
+if (!campoCliente || !campoProduto || !campoQuantidade) return;
+
+const cliente = campoCliente.value.trim();
+const indiceProduto = campoProduto.value;
+const quantidade = parseInt(campoQuantidade.value);
+    
     if (
         cliente === "" ||
         indiceProduto === "" ||
@@ -163,9 +169,9 @@ localStorage.setItem("financeiro", JSON.stringify(financeiro));
 localStorage.setItem("produtos", JSON.stringify(produtos));
 localStorage.setItem("vendas", JSON.stringify(vendas));
 
-    document.getElementById("cliente").value = "";
-    document.getElementById("produtoVenda").value = "";
-    document.getElementById("quantidadeVenda").value = "";
+   campoCliente.value = "";
+campoProduto.value = "";
+campoQuantidade.value = "";
 
     carregarProdutos();
     atualizarTabelaVendas();
@@ -184,6 +190,11 @@ function excluirVenda(indice){
     }
 
     const venda = vendas[indice];
+
+    if (!venda) {
+    alert("Venda não encontrada.");
+    return;
+}
 
     // Devolve o produto ao estoque
     const produto = produtos.find(p => p.produto === venda.produto);
