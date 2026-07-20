@@ -39,6 +39,26 @@ const email = campoEmail.value.trim();
         return;
     }
 
+const clienteExistente = clientes.find(c =>
+    c.nome.toLowerCase() === nome.toLowerCase() &&
+    c.telefone === telefone
+);
+
+if (clienteExistente) {
+    alert("Este cliente já está cadastrado.");
+    return;
+}
+
+if (telefone === "") {
+    alert("Informe o telefone do cliente.");
+    return;
+}
+
+if (email === "") {
+    alert("Informe o e-mail do cliente.");
+    return;
+}
+    
     clientes.push({
         nome,
         telefone,
