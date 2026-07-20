@@ -1,145 +1,209 @@
 // ======================================
-// Financeiro - Linge & Seduções ERP
+// Linge & Seduções ERP
+// Módulo Financeiro
 // ======================================
 
 let financeiro = JSON.parse(localStorage.getItem("financeiro")) || [];
 
-function salvarDados(){
+// ======================================
+// Salvar
+// ======================================
+
+function salvarFinanceiro() {
     localStorage.setItem("financeiro", JSON.stringify(financeiro));
 }
 
-function salvarMovimento(){
+// ======================================
+// Formatar Moeda
+// ======================================
 
-   const campoTipo = document.getElementById("tipo");
-const campoDescricao = document.getElementById("descricao");
-const campoValor = document.getElementById("valor");
-const campoData = document.getElementById("data");
+function moeda(valor) {
+    return Number(valor).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+}
 
-if (!campoTipo || !campoDescricao || !campoValor || !campoData) return;
+// ======================================
+// Atualizar Resumo
+// ======================================
 
-const tipo = campoTipo.value;
-const descricao = campoDescricao.value.trim();
-const valor = parseFloat(campoValor.value);
-const data = campoData.value;
+function atualizarResumoFinanceiro() {
 
-    if(descricao == "" || isNaN(valor) || data == ""){
+    let entradas = 0;
+    let saidas = 0;
+
+    financeiro.forEach(item => {
+
+        if (item.tipo === "Entrada") {
+            entradas += Number(item.valor);
+        } else {
+            saidas += Number(item.valor);
+        }
+
+    });
+
+    const saldo = entradas - saidas;
+
+    atualizarElemento("totalEntradas", moeda(entradas));
+    atualizarElemento("totalSaidas", moeda(saidas));
+    atualizarElemento("saldoFinanceiro", moeda(saldo));
+
+}
+
+// ======================================
+// Atualizar Elemento
+// ======================================
+
+function atualizarElemento(id, valor) {
+
+    const elemento = document.getElementById(id);
+
+    if (elemento) {
+        elemento.innerText = valor;
+    }
+
+}
+
+// ======================================
+// Cadastrar Lançamento
+// ======================================
+
+function cadastrarLancamento() {
+
+    const tipo = document.getElementById("tipo").value;
+    const descricao = document.getElementById("descricao").value.trim();
+    const valor = parseFloat(document.getElementById("valor").value);
+    const data = document.getElementById("data").value;
+
+    if (
+        descricao === "" ||
+        isNaN(valor) ||
+        valor <= 0 ||
+        data === ""
+    ) {
         alert("Preencha todos os campos.");
         return;
     }
 
     financeiro.push({
+
         tipo,
         descricao,
         valor,
         data
+
     });
 
-    salvarDados();
+    salvarFinanceiro();
 
-    limparFormulario();
+    document.getElementById("descricao").value = "";
+    document.getElementById("valor").value = "";
+    document.getElementById("data").value = "";
 
-    atualizarTabela();
+    listarFinanceiro();
 
-}
+    if (typeof atualizarDashboard === "function") {
+        atualizarDashboard();
+    }
 
-function limparFormulario(){
+    window.dispatchEvent(new Event("storage"));
 
-    const descricao = document.getElementById("descricao");
-const valor = document.getElementById("valor");
-const data = document.getElementById("data");
-
-if (descricao) descricao.value = "";
-if (valor) valor.value = "";
-if (data) data.value = "";
+    alert("Lançamento realizado com sucesso!");
 
 }
 
-function atualizarTabela(){
+// ======================================
+// Listar Financeiro
+// ======================================
 
-    let tabela = document.getElementById("tabelaFinanceiro");
+function listarFinanceiro() {
 
-if (!tabela) return;
+    const tabela = document.getElementById("tabelaFinanceiro");
 
-tabela.innerHTML = "";
-    
-    let entradas = 0;
-    let saidas = 0;
+    if (!tabela) return;
 
-    financeiro.forEach((movimento, indice)=>{
+    tabela.innerHTML = "";
 
-        if(movimento.tipo == "Entrada"){
-      entradas += Number(movimento.valor);
-        }else{
-     saidas += Number(movimento.valor);
-        }
+    financeiro.forEach((item, indice) => {
 
         tabela.innerHTML += `
         <tr>
-
-            <td>${movimento.data}</td>
-
-            <td>${movimento.tipo}</td>
-
-            <td>${movimento.descricao}</td>
-
-           <td>${Number(movimento.valor).toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL"
-  })}</td>
-
+            <td>${item.data}</td>
+            <td>${item.tipo}</td>
+            <td>${item.descricao}</td>
+            <td>${moeda(item.valor)}</td>
             <td>
-
-                <button onclick="excluir(${indice})">
-                Excluir
+                <button
+                    class="btn btn-excluir"
+                    onclick="excluirLancamento(${indice})">
+                    🗑️
                 </button>
-
             </td>
-
         </tr>
         `;
 
     });
 
-   const totalEntradas = document.getElementById("totalEntradas");
-const totalSaidas = document.getElementById("totalSaidas");
-const saldoAtual = document.getElementById("saldoAtual");
-
-if (totalEntradas) {
-    totalEntradas.innerHTML = entradas.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL"
-    });
-}
-
-if (totalSaidas) {
-    totalSaidas.innerHTML = saidas.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL"
-    });
-}
-
-if (saldoAtual) {
-    saldoAtual.innerHTML = (entradas - saidas).toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL"
-    });
-}
+    atualizarResumoFinanceiro();
 
 }
 
-function excluir(indice){
+// ======================================
+// Excluir
+// ======================================
 
-    if(confirm("Excluir este lançamento?")){
+function excluirLancamento(indice) {
 
-        financeiro.splice(indice,1);
-
-        salvarDados();
-
-        atualizarTabela();
-
+    if (!confirm("Deseja excluir este lançamento?")) {
+        return;
     }
 
+    financeiro.splice(indice, 1);
+
+    salvarFinanceiro();
+
+    listarFinanceiro();
+
+    if (typeof atualizarDashboard === "function") {
+        atualizarDashboard();
+    }
+
+    window.dispatchEvent(new Event("storage"));
+
+    alert("Lançamento excluído com sucesso!");
+
 }
+
+// ======================================
+// Pesquisar
+// ======================================
+
+function pesquisarFinanceiro() {
+
+    const pesquisa = document.getElementById("pesquisa");
+
+    if (!pesquisa) return;
+
+    const texto = pesquisa.value.toLowerCase();
+
+    document.querySelectorAll("#tabelaFinanceiro tr").forEach(linha => {
+
+        linha.style.display =
+            linha.innerText.toLowerCase().includes(texto)
+                ? ""
+                : "none";
+
+    });
+
+}
+
+// ======================================
+// Inicialização
+// ======================================
+
 document.addEventListener("DOMContentLoaded", () => {
-    atualizarTabela();
+
+    listarFinanceiro();
+
 });
