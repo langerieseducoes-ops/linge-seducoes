@@ -36,11 +36,35 @@ const contato = campoContato.value.trim();
 const telefone = campoTelefone.value.trim();
 const email = campoEmail.value.trim();
 
-    if (!empresa) {
-        alert("Informe o nome da empresa.");
-        return;
-    }
+if (!empresa) {
+    alert("Informe o nome da empresa.");
+    return;
+}
 
+if (!contato) {
+    alert("Informe o nome do contato.");
+    return;
+}
+
+if (!telefone) {
+    alert("Informe o telefone.");
+    return;
+}
+
+if (!email) {
+    alert("Informe o e-mail.");
+    return;
+}
+
+const fornecedorExistente = fornecedores.find(f =>
+    f.empresa.toLowerCase() === empresa.toLowerCase() &&
+    f.telefone === telefone
+);
+
+if (fornecedorExistente) {
+    alert("Este fornecedor já está cadastrado.");
+    return;
+}
     fornecedores.push({
         empresa,
         contato,
@@ -97,15 +121,37 @@ function listarFornecedores() {
 // Excluir fornecedor
 function excluirFornecedor(index) {
 
-    if (confirm("Excluir fornecedor?")) {
+    const fornecedor = fornecedores[index];
 
-        fornecedores.splice(index, 1);
-
-        salvarFornecedores();
-
-        listarFornecedores();
-
+    if (!fornecedor) {
+        alert("Fornecedor não encontrado.");
+        return;
     }
+
+    const compras = JSON.parse(localStorage.getItem("compras")) || [];
+
+   const possuiCompras = compras.some(c =>
+    c.fornecedor &&
+    c.fornecedor.trim().toLowerCase() ===
+    fornecedor.empresa.trim().toLowerCase()
+);
+
+    if (possuiCompras) {
+        alert("Este fornecedor possui compras registradas e não pode ser excluído.");
+        return;
+    }
+
+    if (!confirm("Excluir fornecedor?")) {
+        return;
+    }
+
+    fornecedores.splice(index, 1);
+
+    salvarFornecedores();
+
+    listarFornecedores();
+
+    alert("Fornecedor excluído com sucesso!");
 
 }
 
