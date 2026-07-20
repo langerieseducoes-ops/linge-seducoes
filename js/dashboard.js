@@ -3,8 +3,9 @@
 // ======================================
 
 document.addEventListener("DOMContentLoaded", atualizarDashboard);
+window.addEventListener("storage", atualizarDashboard);
 
-function atualizarDashboard(){
+function atualizarDashboard() {
 
     const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
     const vendas = JSON.parse(localStorage.getItem("vendas")) || [];
@@ -15,10 +16,10 @@ function atualizarDashboard(){
     let valorEstoque = 0;
 
     produtos.forEach(produto => {
-
-        totalEstoque += Number(produto.quantidade);
-        valorEstoque += Number(produto.quantidade) * Number(produto.custo);
-
+        totalEstoque += Number(produto.quantidade) || 0;
+        valorEstoque +=
+            (Number(produto.quantidade) || 0);
+            (Number(produto.custo) || 0);
     });
 
     const hoje = new Date().toLocaleDateString("pt-BR");
@@ -26,61 +27,41 @@ function atualizarDashboard(){
     let vendasHoje = 0;
 
     vendas.forEach(venda => {
-
-        if(venda.data.includes(hoje)){
-            vendasHoje += Number(venda.valor);
+        if (venda.data && venda.data.includes(hoje)) {
+            vendasHoje += Number(venda.valor) || 0;
         }
-
     });
 
     let entradas = 0;
     let saidas = 0;
 
     financeiro.forEach(item => {
-
-        if(item.tipo === "Entrada"){
-            entradas += Number(item.valor);
+        if (item.tipo === "Entrada") {
+            entradas += Number(item.valor) || 0;
+        } else if (item.tipo === "Saída") {
+            saidas += Number(item.valor) || 0;
         }
-
-        if(item.tipo === "Saída"){
-            saidas += Number(item.valor);
-        }
-
     });
 
-    const saldo = entradas - saidas;
+    atualizarElemento("totalProdutos", totalProdutos);
+    atualizarElemento("totalEstoque", totalEstoque);
+    atualizarElemento("valorEstoque", formatarMoeda(valorEstoque));
+    atualizarElemento("vendasHoje", formatarMoeda(vendasHoje));
+    atualizarElemento("totalEntradas", formatarMoeda(entradas));
+    atualizarElemento("totalSaidas", formatarMoeda(saidas));
+    atualizarElemento("saldoFinanceiro", formatarMoeda(entradas - saidas));
+}
 
-    document.getElementById("totalProdutos").innerHTML = totalProdutos;
-    document.getElementById("totalEstoque").innerHTML = totalEstoque;
+function atualizarElemento(id, valor) {
+    const elemento = document.getElementById(id);
+    if (elemento) {
+        elemento.textContent = valor;
+    }
+}
 
-    document.getElementById("valorEstoque").innerHTML =
-        valorEstoque.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL"
-        });
-
-    document.getElementById("vendasHoje").innerHTML =
-        vendasHoje.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL"
-        });
-
-    document.getElementById("totalEntradas").innerHTML =
-        entradas.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL"
-        });
-
-    document.getElementById("totalSaidas").innerHTML =
-        saidas.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL"
-        });
-
-    document.getElementById("saldoFinanceiro").innerHTML =
-        saldo.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL"
-        });
-
+function formatarMoeda(valor) {
+    return Number(valor).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
 }
