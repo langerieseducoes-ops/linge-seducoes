@@ -44,22 +44,25 @@ function atualizarResumoCategorias() {
 
 function limparFormulario() {
 
-    document.getElementById("nomeCategoria").value = "";
+   const campo = document.getElementById("nomeCategoria");
 
+if (campo) {
+    campo.value = "";
+}
     indiceEdicao = -1;
 
 }
-
 // ======================================
 // Cadastrar / Editar
 // ======================================
 
 function cadastrarCategoria() {
 
-    const nome = document
-        .getElementById("nomeCategoria")
-        .value
-        .trim();
+  const campo = document.getElementById("nomeCategoria");
+
+if (!campo) return;
+
+const nome = campo.value.trim();
 
     if (nome === "") {
 
@@ -166,9 +169,16 @@ function listarCategorias(lista = categorias) {
 
 function editarCategoria(indice) {
 
-    document.getElementById("nomeCategoria").value =
-        categorias[indice].nome;
+    if (!categorias[indice]) {
+        alert("Categoria não encontrada.");
+        return;
+    }
 
+  const campo = document.getElementById("nomeCategoria");
+
+if (campo) {
+    campo.value = categorias[indice].nome;
+}
     indiceEdicao = indice;
 
 }
@@ -177,15 +187,18 @@ function editarCategoria(indice) {
 // Excluir Categoria
 // ======================================
 
-function excluirCategoria(indice) {
+function excluirCategoria(indice){
 
-    if (!confirm("Deseja excluir esta categoria?")) {
-
+    if (!categorias[indice]) {
+        alert("Categoria não encontrada.");
         return;
-
     }
 
-    categorias.splice(indice, 1);
+    if (!confirm("Deseja excluir esta categoria?")) {
+        return;
+    }
+
+    categorias.splice(indice,1);
 
     salvarCategorias();
 
@@ -199,10 +212,11 @@ function excluirCategoria(indice) {
 
 function pesquisarCategoria() {
 
-    const texto = document
-        .getElementById("pesquisaCategoria")
-        .value
-        .toLowerCase();
+    const pesquisa = document.getElementById("pesquisaCategoria");
+
+if (!pesquisa) return;
+
+const texto = pesquisa.value.toLowerCase();
 
     const resultado = categorias.filter(categoria =>
 
@@ -221,6 +235,14 @@ function pesquisarCategoria() {
 // ======================================
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    listarCategorias();
+
+});
+
+window.addEventListener("storage", () => {
+
+    categorias = JSON.parse(localStorage.getItem("categorias")) || [];
 
     listarCategorias();
 
