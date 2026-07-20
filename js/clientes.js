@@ -24,9 +24,15 @@ function atualizarResumoClientes() {
 // Cadastrar cliente
 function cadastrarCliente() {
 
-    const nome = document.getElementById("nomeCliente").value.trim();
-    const telefone = document.getElementById("telefoneCliente").value.trim();
-    const email = document.getElementById("emailCliente").value.trim();
+  const campoNome = document.getElementById("nomeCliente");
+const campoTelefone = document.getElementById("telefoneCliente");
+const campoEmail = document.getElementById("emailCliente");
+
+if (!campoNome || !campoTelefone || !campoEmail) return;
+
+const nome = campoNome.value.trim();
+const telefone = campoTelefone.value.trim();
+const email = campoEmail.value.trim();
 
     if (!nome) {
         alert("Informe o nome do cliente.");
@@ -42,9 +48,9 @@ function cadastrarCliente() {
 
     salvarClientes();
 
-    document.getElementById("nomeCliente").value = "";
-    document.getElementById("telefoneCliente").value = "";
-    document.getElementById("emailCliente").value = "";
+    campoNome.value = "";
+campoTelefone.value = "";
+campoEmail.value = "";
 
     listarClientes();
 
