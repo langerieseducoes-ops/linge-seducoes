@@ -109,6 +109,12 @@ const custo = Number(campoCusto.value);
     localStorage.setItem("compras",JSON.stringify(compras));
     localStorage.setItem("produtos",JSON.stringify(produtos));
 
+if (typeof atualizarDashboard === "function") {
+    atualizarDashboard();
+}
+
+window.dispatchEvent(new Event("storage"));
+  
     let financeiro =
     JSON.parse(localStorage.getItem("financeiro")) || [];
 
@@ -126,9 +132,10 @@ const custo = Number(campoCusto.value);
 
     localStorage.setItem("financeiro",JSON.stringify(financeiro));
 
-    atualizarTabela();
+  atualizarTabela();
 
-    carregarProdutos();
+carregarProdutos();
+carregarFornecedores();
 
    campoFornecedor.value = "";
 campoProduto.value = "";
@@ -232,10 +239,11 @@ function excluirCompra(indice){
     const produto = produtos.find(p => p.produto === compra.produto);
 
     if(produto){
-        produto.quantidade =
-            Number(produto.quantidade) - Number(compra.quantidade);
+      produto.quantidade = Math.max(
+    0,
+    Number(produto.quantidade) - Number(compra.quantidade)
+);
     }
-
     // Remove lançamento do financeiro
     let financeiro =
     JSON.parse(localStorage.getItem("financeiro")) || [];
@@ -255,9 +263,17 @@ function excluirCompra(indice){
     localStorage.setItem("compras", JSON.stringify(compras));
     localStorage.setItem("produtos", JSON.stringify(produtos));
 
-    atualizarTabela();
-    carregarProdutos();
+atualizarTabela();
 
+carregarProdutos();
+carregarFornecedores();
+  
+if (typeof atualizarDashboard === "function") {
+    atualizarDashboard();
+}
+
+window.dispatchEvent(new Event("storage"));
+  
     alert("Compra excluída com sucesso!");
 
 }
