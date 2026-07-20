@@ -5,23 +5,31 @@
 
 function entrar() {
 
-    const usuario = document.getElementById("usuario").value.trim();
-    const senha = document.getElementById("senha").value;
+const campoUsuario = document.getElementById("usuario");
+const campoSenha = document.getElementById("senha");
 
+if (!campoUsuario || !campoSenha) {
+    return;
+}
+
+const usuario = campoUsuario.value.trim();
+const senha = campoSenha.value;
+    
     // Validação dos campos
     if (usuario === "" || senha === "") {
 
         alert("Informe o usuário e a senha.");
 
         return;
-
     }
 
-    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+ const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 
-    if (usuarios.length === 0) {
+if (usuarios.length === 0) {
 
     alert("Nenhum usuário cadastrado.");
+
+    campoUsuario.focus();
 
     return;
 
@@ -41,10 +49,10 @@ function entrar() {
 
         alert("Usuário ou senha inválidos.");
 
-        document.getElementById("senha").value = "";
-        document.getElementById("senha").focus();
+campoSenha.value = "";
+campoSenha.focus();
 
-        return;
+return;
 
     }
 
@@ -68,9 +76,8 @@ function entrar() {
 }));
 
     // Limpa formulário
-    document.getElementById("usuario").value = "";
-    document.getElementById("senha").value = "";
-
+   campoUsuario.value = "";
+campoSenha.value = "";
     // Abre o sistema
     window.location.href = "dashboard.html";
 
