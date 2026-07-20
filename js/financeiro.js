@@ -18,7 +18,7 @@ function salvarFinanceiro() {
 // ======================================
 
 function moeda(valor) {
-    return Number(valor).toLocaleString("pt-BR", {
+    return (Number(valor) || 0).toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL"
     });
@@ -35,12 +35,13 @@ function atualizarResumoFinanceiro() {
 
     financeiro.forEach(item => {
 
-        if (item.tipo === "Entrada") {
-            entradas += Number(item.valor);
-        } else {
-            saidas += Number(item.valor);
-        }
+        const valor = Number(item.valor) || 0;
 
+if (item.tipo === "Entrada") {
+    entradas += valor;
+} else if (item.tipo === "Saída") {
+    saidas += valor;
+}
     });
 
     const saldo = entradas - saidas;
@@ -71,11 +72,19 @@ function atualizarElemento(id, valor) {
 
 function cadastrarLancamento() {
 
-    const tipo = document.getElementById("tipo").value;
-    const descricao = document.getElementById("descricao").value.trim();
-    const valor = parseFloat(document.getElementById("valor").value);
-    const data = document.getElementById("data").value;
+   const campoTipo = document.getElementById("tipo");
+const campoDescricao = document.getElementById("descricao");
+const campoValor = document.getElementById("valor");
+const campoData = document.getElementById("data");
 
+if (!campoTipo || !campoDescricao || !campoValor || !campoData) {
+    return;
+}
+
+const tipo = campoTipo.value;
+const descricao = campoDescricao.value.trim();
+const valor = parseFloat(campoValor.value);
+const data = campoData.value;
     if (
         descricao === "" ||
         isNaN(valor) ||
@@ -85,6 +94,11 @@ function cadastrarLancamento() {
         alert("Preencha todos os campos.");
         return;
     }
+    
+    if (tipo === "") {
+    alert("Selecione o tipo.");
+    return;
+}
 
     financeiro.push({
 
@@ -94,13 +108,14 @@ function cadastrarLancamento() {
         data
 
     });
+    
 
     salvarFinanceiro();
 
-    document.getElementById("descricao").value = "";
-    document.getElementById("valor").value = "";
-    document.getElementById("data").value = "";
-
+    campoDescricao.value = "";
+campoValor.value = "";
+campoData.value = "";
+campoTipo.value = "";
     listarFinanceiro();
 
     if (typeof atualizarDashboard === "function") {
@@ -155,6 +170,13 @@ function listarFinanceiro() {
 
 function excluirLancamento(indice) {
 
+    const item = financeiro[indice];
+
+    if (!item) {
+        alert("Lançamento não encontrado.");
+        return;
+    }
+
     if (!confirm("Deseja excluir este lançamento?")) {
         return;
     }
@@ -174,7 +196,6 @@ function excluirLancamento(indice) {
     alert("Lançamento excluído com sucesso!");
 
 }
-
 // ======================================
 // Pesquisar
 // ======================================
