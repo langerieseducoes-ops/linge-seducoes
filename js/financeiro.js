@@ -4,18 +4,23 @@
 
 let financeiro = JSON.parse(localStorage.getItem("financeiro")) || [];
 
-atualizarTabela();
-
 function salvarDados(){
     localStorage.setItem("financeiro", JSON.stringify(financeiro));
 }
 
 function salvarMovimento(){
 
-    const tipo = document.getElementById("tipo").value;
-    const descricao = document.getElementById("descricao").value;
-    const valor = parseFloat(document.getElementById("valor").value);
-    const data = document.getElementById("data").value;
+   const campoTipo = document.getElementById("tipo");
+const campoDescricao = document.getElementById("descricao");
+const campoValor = document.getElementById("valor");
+const campoData = document.getElementById("data");
+
+if (!campoTipo || !campoDescricao || !campoValor || !campoData) return;
+
+const tipo = campoTipo.value;
+const descricao = campoDescricao.value.trim();
+const valor = parseFloat(campoValor.value);
+const data = campoData.value;
 
     if(descricao == "" || isNaN(valor) || data == ""){
         alert("Preencha todos os campos.");
@@ -39,9 +44,13 @@ function salvarMovimento(){
 
 function limparFormulario(){
 
-    document.getElementById("descricao").value = "";
-    document.getElementById("valor").value = "";
-    document.getElementById("data").value = "";
+    const descricao = document.getElementById("descricao");
+const valor = document.getElementById("valor");
+const data = document.getElementById("data");
+
+if (descricao) descricao.value = "";
+if (valor) valor.value = "";
+if (data) data.value = "";
 
 }
 
@@ -49,17 +58,19 @@ function atualizarTabela(){
 
     let tabela = document.getElementById("tabelaFinanceiro");
 
-    tabela.innerHTML = "";
+if (!tabela) return;
 
+tabela.innerHTML = "";
+    
     let entradas = 0;
     let saidas = 0;
 
     financeiro.forEach((movimento, indice)=>{
 
         if(movimento.tipo == "Entrada"){
-            entradas += movimento.valor;
+      entradas += Number(movimento.valor);
         }else{
-            saidas += movimento.valor;
+     saidas += Number(movimento.valor);
         }
 
         tabela.innerHTML += `
@@ -71,10 +82,10 @@ function atualizarTabela(){
 
             <td>${movimento.descricao}</td>
 
-            <td>${movimento.valor.toLocaleString("pt-BR",{
-                style:"currency",
-                currency:"BRL"
-            })}</td>
+           <td>${Number(movimento.valor).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  })}</td>
 
             <td>
 
@@ -89,23 +100,30 @@ function atualizarTabela(){
 
     });
 
-    document.getElementById("totalEntradas").innerHTML =
-        entradas.toLocaleString("pt-BR",{
-            style:"currency",
-            currency:"BRL"
-        });
+   const totalEntradas = document.getElementById("totalEntradas");
+const totalSaidas = document.getElementById("totalSaidas");
+const saldoAtual = document.getElementById("saldoAtual");
 
-    document.getElementById("totalSaidas").innerHTML =
-        saidas.toLocaleString("pt-BR",{
-            style:"currency",
-            currency:"BRL"
-        });
+if (totalEntradas) {
+    totalEntradas.innerHTML = entradas.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+}
 
-    document.getElementById("saldoAtual").innerHTML =
-        (entradas-saidas).toLocaleString("pt-BR",{
-            style:"currency",
-            currency:"BRL"
-        });
+if (totalSaidas) {
+    totalSaidas.innerHTML = saidas.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+}
+
+if (saldoAtual) {
+    saldoAtual.innerHTML = (entradas - saidas).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+}
 
 }
 
@@ -122,3 +140,6 @@ function excluir(indice){
     }
 
 }
+document.addEventListener("DOMContentLoaded", () => {
+    atualizarTabela();
+});
