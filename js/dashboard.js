@@ -15,19 +15,28 @@ function atualizarDashboard() {
     let totalEstoque = 0;
     let valorEstoque = 0;
 
-    produtos.forEach(produto => {
-        totalEstoque += Number(produto.quantidade) || 0;
-        valorEstoque +=
-            (Number(produto.quantidade) || 0);
-            (Number(produto.custo) || 0);
-    });
+ produtos.forEach(produto => {
+
+    if (!produto) return;
+
+    totalEstoque += Number(produto.quantidade) || 0;
+
+    valorEstoque +=
+        (Number(produto.quantidade) || 0) *
+        (Number(produto.custo) || 0);
+
+});
+
 
     const hoje = new Date().toLocaleDateString("pt-BR");
 
     let vendasHoje = 0;
 
     vendas.forEach(venda => {
-        if (venda.data && venda.data.includes(hoje)) {
+    if (
+    venda.data &&
+    venda.data.startsWith(hoje)
+)  {
             vendasHoje += Number(venda.valor) || 0;
         }
     });
@@ -35,13 +44,17 @@ function atualizarDashboard() {
     let entradas = 0;
     let saidas = 0;
 
-    financeiro.forEach(item => {
-        if (item.tipo === "Entrada") {
-            entradas += Number(item.valor) || 0;
-        } else if (item.tipo === "Saída") {
-            saidas += Number(item.valor) || 0;
-        }
-    });
+   financeiro.forEach(item => {
+
+    const valor = Number(item.valor) || 0;
+
+    if (item.tipo === "Entrada") {
+        entradas += valor;
+    } else if (item.tipo === "Saída") {
+        saidas += valor;
+    }
+
+});
 
     atualizarElemento("totalProdutos", totalProdutos);
     atualizarElemento("totalEstoque", totalEstoque);
@@ -60,8 +73,8 @@ function atualizarElemento(id, valor) {
 }
 
 function formatarMoeda(valor) {
-    return Number(valor).toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL"
-    });
+return (Number(valor) || 0).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+});
 }
