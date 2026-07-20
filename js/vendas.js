@@ -165,19 +165,23 @@ financeiro.push({
 });
 
 localStorage.setItem("financeiro", JSON.stringify(financeiro));
-
 localStorage.setItem("produtos", JSON.stringify(produtos));
 localStorage.setItem("vendas", JSON.stringify(vendas));
 
-   campoCliente.value = "";
+campoCliente.value = "";
 campoProduto.value = "";
 campoQuantidade.value = "";
 
-    carregarProdutos();
-    atualizarTabelaVendas();
+carregarProdutos();
+atualizarTabelaVendas();
 
-    alert("Venda registrada com sucesso!");
+if (typeof atualizarDashboard === "function") {
+    atualizarDashboard();
+}
 
+window.dispatchEvent(new Event("storage"));
+
+alert("Venda registrada com sucesso!");
 }
 // ======================================
 // Excluir Venda
@@ -222,9 +226,15 @@ function excluirVenda(indice){
     localStorage.setItem("produtos",JSON.stringify(produtos));
     localStorage.setItem("vendas",JSON.stringify(vendas));
 
-    carregarProdutos();
-    atualizarTabelaVendas();
+   carregarProdutos();
+   atualizarTabelaVendas();
+    
+   if (typeof atualizarDashboard === "function") {
+    atualizarDashboard();
+}
 
+    window.dispatchEvent(new Event("storage"));
+    
     alert("Venda excluída com sucesso!");
 
 }
