@@ -71,13 +71,18 @@ if (email === "") {
     campoNome.value = "";
 campoTelefone.value = "";
 campoEmail.value = "";
+    campoNome.focus();
 
     listarClientes();
 
-    alert("Cliente cadastrado com sucesso!");
-
+if (typeof atualizarDashboard === "function") {
+    atualizarDashboard();
 }
 
+window.dispatchEvent(new Event("storage"));
+    
+    alert("Cliente cadastrado com sucesso!");
+}
 // Listar clientes
 function listarClientes() {
 
@@ -111,16 +116,42 @@ function listarClientes() {
 // Excluir cliente
 function excluirCliente(index) {
 
-    if (confirm("Excluir cliente?")) {
+const cliente = clientes[index];
 
+if (!cliente) {
+    alert("Cliente não encontrado.");
+    return;
+}
+
+const vendas = JSON.parse(localStorage.getItem("vendas")) || [];
+
+const possuiVendas = vendas.some(v =>
+    v.cliente &&
+    v.cliente.trim().toLowerCase() ===
+    cliente.nome.trim().toLowerCase()
+);
+
+if (possuiVendas) {
+    alert("Este cliente possui vendas registradas e não pode ser excluído.");
+    return;
+}
+    
+    if (!confirm("Excluir cliente?")) {
+        return;
+    }
         clientes.splice(index, 1);
 
-        salvarClientes();
+salvarClientes();
 
-        listarClientes();
+listarClientes();
 
-    }
+if (typeof atualizarDashboard === "function") {
+    atualizarDashboard();
+}
 
+window.dispatchEvent(new Event("storage"));
+
+alert("Cliente excluído com sucesso!");
 }
 
 // Pesquisar Cliente
