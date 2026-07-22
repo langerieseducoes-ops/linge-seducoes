@@ -79,9 +79,16 @@ if (fornecedorExistente) {
 campoContato.value = "";
 campoTelefone.value = "";
 campoEmail.value = "";
-
+campoEmpresa.focus();
+    
     listarFornecedores();
 
+if (typeof atualizarDashboard === "function") {
+    atualizarDashboard();
+}
+
+window.dispatchEvent(new Event("storage"));
+    
     alert("Fornecedor cadastrado com sucesso!");
 
 }
@@ -151,6 +158,12 @@ function excluirFornecedor(index) {
 
     listarFornecedores();
 
+   if (typeof atualizarDashboard === "function") {
+    atualizarDashboard();
+}
+
+window.dispatchEvent(new Event("storage"));
+    
     alert("Fornecedor excluído com sucesso!");
 
 }
