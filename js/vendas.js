@@ -110,18 +110,29 @@ const cliente = campoCliente.value.trim();
 const indiceProduto = campoProduto.value;
 const quantidade = parseInt(campoQuantidade.value);
     
-    if (
-        cliente === "" ||
-        indiceProduto === "" ||
-        isNaN(quantidade) ||
-        quantidade <= 0
-    ) {
-        alert("Preencha todos os campos.");
-        return;
-    }
+  if (
+    cliente === "" ||
+    indiceProduto === "" ||
+    isNaN(quantidade) ||
+    quantidade <= 0
+) {
+    alert("Preencha todos os campos.");
+    return;
+}
 
-    const produto = produtos[indiceProduto];
+const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
 
+const clienteExiste = clientes.some(c =>
+    c.nome.trim().toLowerCase() === cliente.toLowerCase()
+);
+
+if (!clienteExiste) {
+    alert("Cliente não cadastrado.");
+    return;
+}
+
+const produto = produtos[indiceProduto];
+    
     if (!produto) {
         alert("Produto inválido.");
         return;
@@ -171,7 +182,8 @@ localStorage.setItem("vendas", JSON.stringify(vendas));
 campoCliente.value = "";
 campoProduto.value = "";
 campoQuantidade.value = "";
-
+campoCliente.focus();
+    
 carregarProdutos();
 atualizarTabelaVendas();
 
