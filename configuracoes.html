@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Configurações | Linge & Seduções ERP</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="topo">
+
+        <h1>⚙️ Configurações do Sistema</h1>
+
+        <a href="index.html" class="btn">
+            ← Voltar ao Dashboard
+        </a>
+
+    </header>
+
+    <div class="card">
+
+        <h2>Segurança</h2>
+
+        <button onclick="abrirUsuarios()" class="btn">
+            👥 Usuários e Permissões
+        </button>
+
+        <button onclick="alterarSenha()" class="btn">
+            🔑 Alterar Minha Senha
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Empresa</h2>
+
+        <button onclick="editarEmpresa()" class="btn">
+            🏢 Dados da Empresa
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Sistema</h2>
+
+        <button onclick="backupSistema()" class="btn">
+            💾 Backup
+        </button>
+
+        <button onclick="restaurarSistema()" class="btn">
+            📂 Restaurar Backup
+        </button>
+
+        <button onclick="limparSistema()" class="btn btn-excluir">
+            🗑 Limpar Dados
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Permissões</h2>
+
+        <button onclick="abrirPermissoes()" class="btn">
+            🔐 Permissões de Menus
+        </button>
+
+    </div>
+
+</div>
+
+<script src="js/configuracoes.js"></script>
+
+</body>
+
+</html>
