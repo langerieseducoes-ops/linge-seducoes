@@ -98,19 +98,32 @@ function atualizarTabela(lista = produtos){
 
     tabela.innerHTML = "";
 
+    if (lista.length === 0) {
+    tabela.innerHTML = `
+        <tr>
+            <td colspan="9" style="text-align:center;">
+                Nenhum produto cadastrado.
+            </td>
+        </tr>
+    `;
+
+    atualizarResumo();
+    return;
+}
+
     lista.forEach((item) => {
 
-        const indiceReal = produtos.findIndex(
-            p => p.codigo === item.codigo
-        );
+      const indiceReal = produtos.findIndex(
+    p => (p.codigo || "").toUpperCase() === (item.codigo || "").toUpperCase()
+);
 
         tabela.innerHTML += `
         <tr>
-            <td>${item.codigo}</td>
-            <td>${item.produto}</td>
-            <td>${item.categoria}</td>
-            <td>${item.tamanho}</td>
-            <td>${item.cor}</td>
+           <td>${escaparHTML(item.codigo)}</td>
+           <td>${escaparHTML(item.produto)}</td>
+           <td>${escaparHTML(item.categoria)}</td>
+           <td>${escaparHTML(item.tamanho)}</td>
+           <td>${escaparHTML(item.cor)}</td>
 
             <td>${Number(item.custo).toLocaleString("pt-BR", {
                 style: "currency",
@@ -122,7 +135,7 @@ function atualizarTabela(lista = produtos){
                 currency: "BRL"
             })}</td>
 
-            <td>${item.quantidade}</td>
+            <td>${Number(item.quantidade || 0)}</td>
 
             <td>
                 <button class="btn btn-editar" onclick="editarProduto(${indiceReal})">
@@ -182,44 +195,44 @@ if (codigo) {
 // Adicionar Produto
 // ======================================
 
-function adicionarProduto(){
+function adicionarProduto() {
 
-    const codigo = document.getElementById("codigo").value.trim();
+    const codigo = document.getElementById("codigo").value.trim().toUpperCase();
     const produto = document.getElementById("produto").value.trim();
     const categoria = document.getElementById("categoria").value;
     const tamanho = document.getElementById("tamanho").value;
     const cor = document.getElementById("cor").value.trim();
     const custo = parseFloat(document.getElementById("custo").value);
     const venda = parseFloat(document.getElementById("venda").value);
-    const quantidade = parseInt(document.getElementById("quantidade").value);
+    const quantidade = parseInt(document.getElementById("quantidade").value, 10);
 
-   if (
-    !codigo ||
-    !produto ||
-    !categoria ||
-    !tamanho ||
-    !cor ||
-    isNaN(custo) ||
-    isNaN(venda) ||
-    isNaN(quantidade)
-) {
-    alert("Preencha todos os campos.");
-    return;
-}
+    if (
+        !codigo ||
+        !produto ||
+        !categoria ||
+        !tamanho ||
+        !cor ||
+        isNaN(custo) ||
+        isNaN(venda) ||
+        isNaN(quantidade)
+    ) {
+        alert("Preencha todos os campos.");
+        return;
+    }
 
-if (quantidade < 0) {
-    alert("A quantidade não pode ser negativa.");
-    return;
-}
+    if (quantidade < 0) {
+        alert("A quantidade não pode ser negativa.");
+        return;
+    }
 
-if (custo < 0 || venda < 0) {
-    alert("Os preços não podem ser negativos.");
-    return;
-}
+    if (custo < 0 || venda < 0) {
+        alert("Os preços não podem ser negativos.");
+        return;
+    }
 
-if(indiceEdicao === -1){
+    if (indiceEdicao === -1) {
 
-        if(produtos.some(p => p.codigo === codigo)){
+        if (produtos.some(p => (p.codigo || "").toUpperCase() === codigo)) {
             alert("Já existe um produto com esse código.");
             return;
         }
@@ -235,40 +248,40 @@ if(indiceEdicao === -1){
             quantidade
         });
 
+    } else {
+
+        produtos[indiceEdicao] = {
+            codigo,
+            produto,
+            categoria,
+            tamanho,
+            cor,
+            custo,
+            venda,
+            quantidade
+        };
+
     }
-else{
 
-    produtos[indiceEdicao] = {
-        codigo,
-        produto,
-        categoria,
-        tamanho,
-        cor,
-        custo,
-        venda,
-        quantidade
-    };
+    alert(
+        indiceEdicao >= 0
+            ? "Produto atualizado com sucesso!"
+            : "Produto cadastrado com sucesso!"
+    );
 
-}
-if (indiceEdicao >= 0) {
+    salvarProdutos();
+    carregarCategorias();
+    atualizarTabela();
 
-    alert("Produto atualizado com sucesso!");
+    if (typeof atualizarDashboard === "function") {
+        atualizarDashboard();
+    }
 
-}
-else {
+    window.dispatchEvent(new Event("storage"));
 
-    alert("Produto cadastrado com sucesso!");
-
+    limparFormulario();
 }
 
-salvarProdutos();
-
-limparFormulario();
-
-carregarCategorias();
-
-atualizarTabela();
-}
 // ======================================
 // Editar Produto
 // ======================================
@@ -322,22 +335,47 @@ if (codigo) {
 
 function excluirProduto(indice){
 
+    const produto = produtos[indice];
+
+    if (!produto) {
+        alert("Produto não encontrado.");
+        return;
+    }
+
+    const vendas = JSON.parse(localStorage.getItem("vendas")) || [];
+
+    const possuiVendas = vendas.some(v =>
+        v.produto &&
+        v.produto.trim().toLowerCase() ===
+        produto.produto.trim().toLowerCase()
+    );
+
+    if (possuiVendas) {
+        alert("Este produto possui vendas registradas e não pode ser excluído.");
+        return;
+    }
+
     if(confirm("Deseja excluir este produto?")){
 
         produtos.splice(indice,1);
 
         salvarProdutos();
-       
-        carregarCategorias();
 
-        atualizarTabela();
+      carregarCategorias();
 
-        limparFormulario();
+      atualizarTabela();
 
-    }
-
+        if (typeof atualizarDashboard === "function") {
+    atualizarDashboard();
 }
 
+limparFormulario();
+
+window.dispatchEvent(new Event("storage"));
+
+        alert("Produto excluído com sucesso!");
+    }
+}
 // ======================================
 // Pesquisa
 // ======================================
@@ -348,13 +386,25 @@ function pesquisarProduto(){
 
 if (!pesquisa) return;
 
-const texto = pesquisa.value.toLowerCase();
+const texto = pesquisa.value.trim().toLowerCase();
 
- const resultado = produtos.filter(p =>
-    (p.produto || "").toLowerCase().includes(texto) ||
-    (p.codigo || "").toLowerCase().includes(texto) ||
-    (p.categoria || "").toLowerCase().includes(texto)
-);
+const resultado = produtos.filter(p => {
+
+    const codigo = (p.codigo || "").toLowerCase();
+    const produto = (p.produto || "").toLowerCase();
+    const categoria = (p.categoria || "").toLowerCase();
+    const cor = (p.cor || "").toLowerCase();
+    const tamanho = (p.tamanho || "").toLowerCase();
+
+    return (
+        codigo.includes(texto) ||
+        produto.includes(texto) ||
+        categoria.includes(texto) ||
+        cor.includes(texto) ||
+        tamanho.includes(texto)
+    );
+
+});
     atualizarTabela(resultado);
 
 }
@@ -365,23 +415,21 @@ const texto = pesquisa.value.toLowerCase();
 
 document.addEventListener("DOMContentLoaded", () => {
 
-window.addEventListener("storage", () => {
+    window.addEventListener("storage", () => {
 
-    produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+        produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+
+        carregarCategorias();
+        atualizarTabela();
+
+    });
 
     carregarCategorias();
-
     atualizarTabela();
 
-});
-
-atualizarTabela();
-
-const codigo = document.getElementById("codigo");
-
-if (codigo) {
-    limparFormulario();
-}
+    if (document.getElementById("codigo")) {
+        limparFormulario();
+    }
 
 });
 // ======================================
@@ -392,4 +440,12 @@ function imprimirTabela() {
 
     window.print();
 
+}
+function escaparHTML(texto) {
+    return String(texto ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
